@@ -1,39 +1,31 @@
 import React from 'react';
-import 'src/css/App.css';
+import './css/App.css';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Chatroom from './pages/Chatroom';
+import Signup from './pages/Signup';
+import Login from "./pages/Login";
 
-const App = ({ }) => {
-  const [totalUsers, setTotalUsers] = React.useState(0);
-  const [notes, setNotes] = React.useState(['test']);
-  const [note, setNote] = React.useState('');
-
-  const handleSubmit = () => {
-    console.log(note);
-    setNote('');
-  };
-
-  React.useEffect(() => {
-    
-  }, []);
+const App = () => {
+  const [appUser, setAppUser] = React.useState('');
 
   return (
-    <div className="App">
-      <header className="user-counter">
-        {totalUsers} : Users
-      </header>
-      <div>
-        <input value={note} onChange={e => setNote(e.target.value)} />
-        <button onClick={handleSubmit}>Submit</button>
-      </div>
-      <div className="notes">
-        {notes.map((note, i) => (
-          <div className="note-item" key={i}>
-            <div>{i}</div>
-            <div>{note}</div>
-          </div>
-        ))}
-      </div>
+    <div>
+      <BrowserRouter>
+      <Switch>
+        <Route path="/chatroom">
+          <Chatroom appUser={appUser} setAppUser={setAppUser} />
+        </Route>
+        <Route path="/signup">
+          <Signup appUser={appUser} setAppUser={setAppUser} />
+        </Route>
+        <Route path="/">
+          <Login appUser={appUser} setAppUser={setAppUser} />
+        </Route>
+      </Switch>
+      </BrowserRouter>
     </div>
   );
-}
+};
+
 
 export default App;
