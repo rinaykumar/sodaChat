@@ -33,7 +33,24 @@ public class Server
 
     post("api/authenticate",(req, res) -> {
       String bodyString = req.body();
-      return 0;
+      AuthDto authDto = gson.fromJson(bodyString, AuthDto.class);
+
+      List<Document> user = userCollection.find(new Document("username", authDto.username))
+              .into(new ArrayList<>());
+      if(user.size() != 1) {
+          AuthResponseDto responseDto = new AuthResponseDto(false, "User not found");
+          return gson.toJson(responseDto);
+      }
+
+      Document userDocument = user.get(0);
+      if(!userDocument.getString("password").equals(authDto.password)) {
+          AuthResponseDto responseDto = new AuthResponseDto(false, "Password is incorrect");
+          return gson.toJson(responseDto);
+      }
+
+      AuthResponseDto responseDto = new AuthResponseDto(true, null);
+      return gson.toJson(responseDto);
+
     });
 
     post("api/register", (req, res) -> {
