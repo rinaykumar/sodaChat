@@ -4,7 +4,7 @@ import Selfie from '../svg/selfie.jpg';
 import Selfie2 from '../svg/selfie2.jpg'
 import LikeBtn from '../svg/like-bttn.svg';
 import axios from 'axios';
-//import { animateScroll } from 'react-scroll'; // Could be used to autoscroll messagebox?
+// import { Link } from 'react-scroll'; // Could be used to autoscroll messagebox?
 
 const Chatroom = ({appUser, setAppUser}) => {    
     const [message, setMessage] = React.useState('');
@@ -21,6 +21,21 @@ const Chatroom = ({appUser, setAppUser}) => {
           })
           .catch(console.log);
     };
+
+const ScrollMessages = ({messages}) => {
+    const lastMessageRef = React.useRef(null);
+    const scrolltoBottom = () => {
+        lastMessageRef.current.scrollIntoView({  behavior: "smooth", duration : 10000, spy : "true"});
+    }
+    React.useEffect(scrolltoBottom, [messages]);
+    return(
+<div>
+<div  ref={lastMessageRef}/>
+</div>
+
+    );
+}
+
 
     const submitMessage = () => { 
         console.log("From submitMessage");
@@ -120,6 +135,7 @@ const Chatroom = ({appUser, setAppUser}) => {
                                             </button>
                                         </div>                                        
                                     </div>  
+                                    <ScrollMessages messages={messages}/>
                                 </div>
                             ); 
                         })}
