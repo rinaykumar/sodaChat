@@ -1,17 +1,20 @@
 import React from 'react';
 import '../css/stylesheet.css';
 import Selfie from '../svg/selfie.jpg';
-import Selfie2 from '../svg/selfie2.jpg'
+import Profile1 from '../svg/profile1.png';
+import Profile2 from '../svg/profile2.png';
+import Profile3 from '../svg/profile3.png';
+import Profile4 from '../svg/profile4.png';
 import LikeBtn from '../svg/like-bttn.svg';
 import axios from 'axios';
-//import { animateScroll } from 'react-scroll'; // Could be used to autoscroll messagebox?
 
 const Chatroom = ({appUser, setAppUser}) => {    
     const [message, setMessage] = React.useState('');
     const [messages, setMessages] = React.useState([]);
+    const [profileNum, setProfileNum] = React.useState('');
 
     // Setting username for testing until login auth is implemented
-    setAppUser('User Name 3');
+    setAppUser('user');
 
     const fetchMessages = () => {
         axios.get('/api/getAllMessages')
@@ -33,6 +36,26 @@ const Chatroom = ({appUser, setAppUser}) => {
                 <div ref={lastMessageRef}/>
             </div>
         );
+    }
+
+    const profilePic = () => {
+        axios.post('/api/profilePic', appUser)
+            .then((res) => {
+                console.log(res.data);
+                setProfileNum(res.data);
+            })
+            .catch(console.log);
+         
+        switch (profileNum) {
+            case 1: 
+                return Profile1
+            case 2:
+                return Profile2
+            case 3:
+                return Profile3
+            default:
+                return Profile4    
+        }    
     }
 
     const submitMessage = () => { 
@@ -77,7 +100,7 @@ const Chatroom = ({appUser, setAppUser}) => {
                 </div>
                 <div class="left-menu-bar">
                     <div class="menu-profile-info">
-                        <img id="user-profile-image" src={Selfie} alt=""/>
+                        <img id="user-profile-image" src={profilePic()} alt=""/>
                         {appUser && <h5 id="username">{appUser}</h5>} 
                     </div>
                     <div class="bottom-buttons">
@@ -94,7 +117,7 @@ const Chatroom = ({appUser, setAppUser}) => {
                     <div class="messages-box">
                         <div class="submitted-message">
                             <div class="submitted-message-box-1">
-                                <img class="submitted-message-image" src={Selfie2} alt=""/>
+                                <img class="submitted-message-image" src={Selfie} alt=""/>
                             </div>
                             <div class="submitted-message-box-2">
                                 <div class="message-content-header">
@@ -118,7 +141,7 @@ const Chatroom = ({appUser, setAppUser}) => {
                             return (
                                 <div class="submitted-message">
                                     <div class="submitted-message-box-1">
-                                        <img class="submitted-message-image" src={Selfie} alt=""/>
+                                        <img class="submitted-message-image" src={profilePic()} alt=""/>
                                     </div>
                                     <div class="submitted-message-box-2">
                                         <div class="message-content-header">
