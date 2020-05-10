@@ -10,9 +10,11 @@ import com.google.gson.Gson;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import static com.mongodb.client.model.Filters.*;
 import org.bson.Document;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Server {
   private static List<String> items = new ArrayList<>();
@@ -39,7 +41,6 @@ public class Server {
       messageCollection.insertOne(newMessage);
     }
 
-    /*
     // Check if initial user is in database, if not then add
     List<Document> initialUser1 = userCollection.find(new Document("username", "user"))
             .into(new ArrayList<>());
@@ -47,11 +48,11 @@ public class Server {
     if (initialUser1.isEmpty()) {
       Document newUser = new Document()
               .append("username", "user")
-              .append ("password", "password");
+              .append ("password", "password")
+              .append("profilePic", 1);
 
       userCollection.insertOne(newUser);
     }
-     */
 
     // Init Gson
     Gson gson = new Gson();
@@ -96,13 +97,17 @@ public class Server {
         return gson.toJson(authResponseDTO);
       }
 
+      Random rand = new Random();
+      int profilePicNum = rand.nextInt(4);
+
       Document newUser = new Document()
               .append("username", authDTO.username)
-              .append("password", authDTO.password);
+              .append("password", authDTO.password)
+              .append("profilePic", profilePicNum);
       userCollection.insertOne(newUser);
-      AuthResponseDTO authResponseDto = new AuthResponseDTO(true, null);
+      AuthResponseDTO authResponseDTO = new AuthResponseDTO(true, null);
 
-      return gson.toJson(authResponseDto);
+      return gson.toJson(authResponseDTO);
     });
 
     post("/api/addMessage", (req, res) -> {
@@ -116,7 +121,21 @@ public class Server {
       return "OK";
     });
 
-    /*
+    post("/api/profilePic", (req, res) -> {
+      String bodyString = req.body();
+      Document userToFind = userCollection.find(eq("username", bodyString)).first();
+      assert userToFind != null;
+      return userToFind.get("profilePic").toString();
+    });
+
+    get("/api/getAllMessages", (req, res) -> {
+      MessagesDAO messagesDAO = MessagesDAO.getInstance();
+      MessagesListDTO list = messagesDAO.getAllMessages();
+      return gson.toJson(list);
+    });
+
+    /* Can be modified to delete users:
+
     post("/api/deleteItem", (req, res) -> {
       String bodyString = req.body();
       AddItemDTO itemDTO = gson.fromJson(bodyString,
@@ -129,11 +148,5 @@ public class Server {
       return "OK";
     });
      */
-
-    get("/api/getAllMessages", (req, res) -> {
-      MessagesDAO messagesDAO = MessagesDAO.getInstance();
-      MessagesListDTO list = messagesDAO.getAllMessages();
-      return gson.toJson(list);
-    });
   }
 }
