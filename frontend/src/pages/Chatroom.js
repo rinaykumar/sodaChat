@@ -23,10 +23,6 @@ const Chatroom = ({appUser, setAppUser}) => {
 
     const ScrollMessages = ({messages}) => {
         const lastMessageRef = React.useRef(null);
-        // const scrollToBottom = () => {
-        //     lastMessageRef.current.scrollIntoView({  behavior: "smooth", duration : 1000});
-        // }
-        // React.useEffect(scrollToBottom, [messages]);
         React.useEffect(()=> {
             lastMessageRef.current.scrollIntoView({  behavior: "smooth", duration : 1000});
         }, [messages]);
