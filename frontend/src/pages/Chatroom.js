@@ -22,6 +22,19 @@ const Chatroom = ({appUser, setAppUser}) => {
           .catch(console.log);
     };
 
+    const ScrollMessages = ({messages}) => {
+        const lastMessageRef = React.useRef(null);
+        const scrolltoBottom = () => {
+            lastMessageRef.current.scrollIntoView({  behavior: "smooth", duration : 10000, spy : "true"});
+        }
+        React.useEffect(scrolltoBottom, [messages]);
+        return(
+            <div>
+                <div ref={lastMessageRef}/>
+            </div>
+        );
+    }
+
     const submitMessage = () => { 
         console.log("From submitMessage");
         console.log(message);
@@ -119,7 +132,8 @@ const Chatroom = ({appUser, setAppUser}) => {
                                                 <p id="thumbs-up-count">0</p>
                                             </button>
                                         </div>                                        
-                                    </div>  
+                                    </div> 
+                                    <ScrollMessages messages={messages}/> 
                                 </div>
                             ); 
                         })}
