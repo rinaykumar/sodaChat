@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.mongodb.client.model.Filters.eq;
+
 public class MessagesDAO {
 
     private static MessagesDAO instance;
@@ -31,10 +33,15 @@ public class MessagesDAO {
         // Connect to mongo
         MongoDatabase db = mongoClient.getDatabase("FinalDatabase");
         MongoCollection<Document> MessagesCollection = db.getCollection("Messages");
+        MongoCollection<Document> userCollection = db.getCollection("Users");
+
+        // For setting profile pic
+        Document userToFind = userCollection.find(eq("username", user)).first();
+        String picNum = userToFind.get("profilePic").toString();
 
         // Create new DTO and convert to JSON
         Date date = new Date();
-        AddMessageDTO newMessageDTO = new AddMessageDTO(text, user, date);
+        AddMessageDTO newMessageDTO = new AddMessageDTO(text, user, date, picNum);
         String messageJSON = gson.toJson(newMessageDTO);
 
         // Create new mongo Document from JSON

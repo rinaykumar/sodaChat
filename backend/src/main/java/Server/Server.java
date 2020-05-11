@@ -28,6 +28,7 @@ public class Server {
     MongoCollection<Document> messageCollection = db.getCollection("Messages");
     MongoCollection<Document> userCollection = db.getCollection("Users");
 
+    /* Not really needed, comment out for now
     // Adds a second initial message to db if it's not already there
     List<Document> initialMessage2 = messageCollection.find(new Document("user", "User Name 2"))
             .into(new ArrayList<>());
@@ -40,6 +41,7 @@ public class Server {
 
       messageCollection.insertOne(newMessage);
     }
+     */
 
     // Check if initial user is in database, if not then add
     List<Document> initialUser1 = userCollection.find(new Document("username", "user"))
