@@ -14,7 +14,7 @@ const Chatroom = ({appUser, setAppUser}) => {
     const [profileNum, setProfileNum] = React.useState('');
 
     // Setting username for testing until login auth is implemented
-    setAppUser('user');
+    // setAppUser('user');
 
     const fetchMessages = () => {
         axios.get('/api/getAllMessages')
