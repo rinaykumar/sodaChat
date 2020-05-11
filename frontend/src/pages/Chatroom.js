@@ -5,12 +5,14 @@ import Selfie2 from '../svg/selfie2.jpg'
 import LikeBtn from '../svg/like-bttn.svg';
 import axios from 'axios';
 
+const ws = new WebSocket('ws://localhost:1234/ws');
+
 const Chatroom = ({appUser, setAppUser}) => {    
     const [message, setMessage] = React.useState('');
     const [messages, setMessages] = React.useState([]);
 
     // Setting username for testing until login auth is implemented
-    setAppUser('User Name 3');
+    setAppUser('John');
 
     const fetchMessages = () => {
         axios.get('/api/getAllMessages')
@@ -33,10 +35,29 @@ const Chatroom = ({appUser, setAppUser}) => {
         );
     }
 
+    const addMessage = (stringMessage) => {
+        console.log(stringMessage.data); // incoming from server
+        setMessages((messages) => {
+          const newMessages = messages.slice(); // copy from item 0
+          newMessages.push(stringMessage.data);
+          console.log(newMessages);
+          return newMessages;
+        });
+      };
+
+      React.useEffect(() => {
+        console.log('Got the mesage');
+        // do something when component mounts
+        ws.addEventListener('message', addMessage);
+        return () => ws.removeEventListener('message', addMessage);
+      }, []);
+
     const submitMessage = () => { 
         console.log("From submitMessage");
         console.log(message);
         console.log(appUser);
+        ws.send(message);
+        setMessage('')
         const body = {
           text: message,
           user: appUser
@@ -45,6 +66,7 @@ const Chatroom = ({appUser, setAppUser}) => {
           .then(() => setMessage(''))
           .then(() => fetchMessages())
           .catch(console.log);
+
       };
 
     const parseText = (message) => {
@@ -61,7 +83,7 @@ const Chatroom = ({appUser, setAppUser}) => {
         let obj = JSON.parse(message);
         return obj.date;
     }
-      
+
     React.useEffect(() => {
         fetchMessages();
     }, []);

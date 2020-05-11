@@ -1,6 +1,5 @@
 package Server;
 
-import static spark.Spark.*;
 import DAO.MessagesDAO;
 import DTO.AddMessageDTO;
 import DTO.MessagesListDTO;
@@ -9,8 +8,11 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static spark.Spark.*;
 
 public class Server {
   private static List<String> items = new ArrayList<>();
