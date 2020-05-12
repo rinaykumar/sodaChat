@@ -7,7 +7,6 @@
 }
 
 .App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -21,27 +20,27 @@
   color: #09d3ac;
 }
 
-.clicker{
-  width:200px;
+.clicker {
+  width: 200px;
   height: 200px;
   font-size: 24px;
 }
 
-.user-counter{
+.user-counter {
   padding: 5px;
   background: black;
   color: white;
   margin-bottom: 50px;
 }
 
-.notes{
-  width:600px;
+.notes {
+  width: 600px;
   display: flex;
   margin: 0 auto;
   margin-top: 40px;
 }
 
-.note-item{
+.note-item {
   border: 1px solid black;
   flex-grow: 1;
   display: flex;
