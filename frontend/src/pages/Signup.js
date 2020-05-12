@@ -53,6 +53,10 @@ const Signup = ({ appUser, setAppUser }) => {
             <div className="flexBox-2">
               {/* Header */}
               <h4 id="header-signIn-signup" class="centerText"><em>WELCOME!</em></h4>
+              {/* error message */}
+              <div id="error">
+                {error && <strong>{error}</strong>}
+              </div>
               {/* Start of Login Form (requires Username & Password) */}
               <p className="usernameText">UserName:
                 <input className="username-input inputText" value={username} onChange={(e) => setUsername(e.target.value)} required="required" />
@@ -68,9 +72,6 @@ const Signup = ({ appUser, setAppUser }) => {
                 I Accept Terms of Services and Privacy Policy
               </p>
               <button id="submitBttn" class="fontRobotoMono" disabled={!username || !password} onClick={handleAuth}>Register</button>
-            </div>
-            <div id="error">
-              {error && <strong>{error}</strong>}
             </div>
           </div>
         </div>
