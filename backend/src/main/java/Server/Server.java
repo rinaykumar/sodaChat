@@ -3,8 +3,8 @@ package Server;
 import static spark.Spark.*;
 import DAO.MessagesDAO;
 import DTO.AddMessageDTO;
-import DTO.AuthDTO;
-import DTO.AuthResponseDTO;
+import DTO.AuthDto;
+import DTO.AuthResponseDto;
 import DTO.MessagesListDTO;
 import com.google.gson.Gson;
 import com.mongodb.MongoClient;
@@ -67,35 +67,35 @@ public class Server {
 
     post("api/authenticate",(req, res) -> {
       String bodyString = req.body();
-      AuthDTO authDTO = gson.fromJson(bodyString, AuthDTO.class);
+      AuthDto authDTO = gson.fromJson(bodyString, AuthDto.class);
 
       List<Document> user = userCollection.find(new Document("username", authDTO.username))
         .into(new ArrayList<>());
       if(user.size() != 1) {
-        AuthResponseDTO responseDTO = new AuthResponseDTO(false, "User not found");
+        AuthResponseDto responseDTO = new AuthResponseDto(false, "User not found");
         return gson.toJson(responseDTO);
       }
 
       Document userDocument = user.get(0);
       if(!userDocument.getString("password").equals(authDTO.password)) {
-        AuthResponseDTO responseDTO = new AuthResponseDTO(false, "Password is incorrect");
+        AuthResponseDto responseDTO = new AuthResponseDto(false, "Password is incorrect");
         return gson.toJson(responseDTO);
       }
 
-      AuthResponseDTO responseDTO = new AuthResponseDTO(true, null);
+      AuthResponseDto responseDTO = new AuthResponseDto(true, null);
       return gson.toJson(responseDTO);
 
     });
 
     post("api/register", (req, res) -> {
       String bodyString = req.body();
-      AuthDTO authDTO = gson.fromJson(bodyString, AuthDTO.class);
+      AuthDto authDTO = gson.fromJson(bodyString, AuthDto.class);
 
       List<Document> user = userCollection.find(new Document("username", authDTO.username))
         .into(new ArrayList<>());
 
       if(!user.isEmpty()) {
-        AuthResponseDTO authResponseDTO = new AuthResponseDTO(false, "User already exists");
+        AuthResponseDto authResponseDTO = new AuthResponseDto(false, "User already exists");
         return gson.toJson(authResponseDTO);
       }
 
@@ -107,7 +107,7 @@ public class Server {
         .append("password", authDTO.password)
         .append("profilePic", profilePicNum);
       userCollection.insertOne(newUser);
-      AuthResponseDTO authResponseDTO = new AuthResponseDTO(true, null);
+      AuthResponseDto authResponseDTO = new AuthResponseDto(true, null);
 
       return gson.toJson(authResponseDTO);
     });
