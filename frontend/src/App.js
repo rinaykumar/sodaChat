@@ -8,6 +8,12 @@ import Login from "./pages/Login";
 const App = () => {
   const [appUser, setAppUser] = React.useState('');
 
+  // Commenting out for now
+  // logs out the [USER]
+  // const logout = (e) => {
+  //   setAppUser(null); 
+  // }
+
   return (
     <div>
       <BrowserRouter>

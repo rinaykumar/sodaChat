@@ -9,10 +9,14 @@ import Profile4 from '../svg/profile4.png';
 import LikeBtn from '../svg/like-bttn.svg';
 import axios from 'axios';
 
+const ws = new WebSocket('ws://localhost:1234/ws');
+
 const Chatroom = ({ appUser, setAppUser }) => {
     const [message, setMessage] = React.useState('');
     const [messages, setMessages] = React.useState([]);
     const [profileNum, setProfileNum] = React.useState('');
+
+    //setAppUser('testuser');
     
     const fetchMessages = () => {
         axios.get('/api/getAllMessages')
@@ -35,6 +39,23 @@ const Chatroom = ({ appUser, setAppUser }) => {
             </div>
         );
     }
+
+    const addMessage = (stringMessage) => {
+        console.log(stringMessage.data); // incoming from server
+        setMessages((messages) => {
+            const newMessages = messages.slice(); // copy from item 0
+            newMessages.push(stringMessage.data);
+            console.log(newMessages);
+            return newMessages;
+        });
+    };
+
+    React.useEffect(() => {
+        console.log('Got the mesage');
+        // do something when component mounts
+        ws.addEventListener('message', addMessage);
+        return () => ws.removeEventListener('message', addMessage);
+    }, []);
 
     // This grabs the current user's profile pic number for the sidebar
     const profilePic = () => {
@@ -61,6 +82,8 @@ const Chatroom = ({ appUser, setAppUser }) => {
         console.log("From submitMessage");
         console.log(message);
         console.log(appUser);
+        ws.send(message);
+        setMessage('')
         const body = {
             text: message,
             user: appUser
@@ -98,13 +121,14 @@ const Chatroom = ({ appUser, setAppUser }) => {
                 return Profile2
             case "2":
                 return Profile3
-            case "3":
+            default:
                 return Profile4
         }
     }
 
     React.useEffect(() => {
         fetchMessages();
+        
     }, []);
 
     if (!appUser) {
@@ -121,7 +145,7 @@ const Chatroom = ({ appUser, setAppUser }) => {
                     <div class="left-menu-bar">
                         <div class="menu-profile-info">
                             <img id="user-profile-image" src={profilePic()} alt="" />
-                            {appUser && <h5 id="username">{appUser}</h5>}
+                            <h5 id="username">{appUser}</h5>
                         </div>
                         <div class="bottom-buttons">
                             <button class="menu-buttons" id="profile-bttn" type="button" name="profile">PROFILE</button>
@@ -176,7 +200,7 @@ const Chatroom = ({ appUser, setAppUser }) => {
                                                 </button>
                                             </div>
                                         </div>
-                                        <ScrollMessages messages={messages} />
+                                        <ScrollMessages messages={messages}/>
                                     </div>
                                 );
                             })}
