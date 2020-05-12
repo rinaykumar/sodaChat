@@ -1,29 +1,15 @@
-<<<<<<< HEAD
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,900&display=swap");
-=======
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,900&display=swap');
->>>>>>> 563eb1dc158ee346b8ba558566d3a9c48bd35645
 
 body {
   background: #383838;
   margin: 0;
   padding: 0;
-<<<<<<< HEAD
-  font-family: "Roboto", sans-serif;
-=======
   font-family: 'Roboto', sans-serif;
->>>>>>> 563eb1dc158ee346b8ba558566d3a9c48bd35645
   overflow: hidden;
 }
 
 /* removes the blue border once items are clicked */
-<<<<<<< HEAD
-input:focus,
-textarea,
-button {
-=======
 input:focus, textarea, button {
->>>>>>> 563eb1dc158ee346b8ba558566d3a9c48bd35645
   outline: none !important;
 }
 
@@ -41,11 +27,7 @@ input:focus, textarea, button {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-<<<<<<< HEAD
-  background: rgba(31, 35, 38, 0.6);
-=======
   background: rgba(31, 35, 38, .60);
->>>>>>> 563eb1dc158ee346b8ba558566d3a9c48bd35645
   border-radius: 50px;
 }
 
@@ -70,11 +52,7 @@ input:focus, textarea, button {
   }
 
   #sidebar {
-<<<<<<< HEAD
-    background: #1f2326;
-=======
     background: #1F2326;
->>>>>>> 563eb1dc158ee346b8ba558566d3a9c48bd35645
     height: 100vh;
   }
 
@@ -87,10 +65,7 @@ input:focus, textarea, button {
 }
 
 @media (max-width: 1159px) {
-<<<<<<< HEAD
-=======
 
->>>>>>> 563eb1dc158ee346b8ba558566d3a9c48bd35645
   /* For small screens (tablets, phones): */
   #sidebar {
     width: 260px;
@@ -99,27 +74,13 @@ input:focus, textarea, button {
     left: -260px;
     height: 100vh;
     z-index: 999;
-<<<<<<< HEAD
-    background: #1f2326;
-=======
     background: #1F2326;
->>>>>>> 563eb1dc158ee346b8ba558566d3a9c48bd35645
     color: #fff;
     transition: all 0.3s;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
   }
 
   #sidebarCollapse {
-<<<<<<< HEAD
-    color: #7ba1a6;
-    background: #383838;
-    border-color: #7ba1a6;
-  }
-
-  #sidebarCollapse:hover {
-    color: #fff;
-    border-color: #fff;
-=======
     color: #7BA1A6;
     background: #383838;
     border-color: #7BA1A6;
@@ -128,7 +89,6 @@ input:focus, textarea, button {
   #sidebarCollapse:hover {
     color: #FFF;
     border-color: #FFF;
->>>>>>> 563eb1dc158ee346b8ba558566d3a9c48bd35645
   }
 
   .left-menu-bar {
@@ -155,11 +115,7 @@ input:focus, textarea, button {
   }
 
   #dismiss:hover {
-<<<<<<< HEAD
-    color: #7ba1a6;
-=======
     color: #7BA1A6;
->>>>>>> 563eb1dc158ee346b8ba558566d3a9c48bd35645
   }
 
   .overlay {
@@ -197,11 +153,7 @@ input:focus, textarea, button {
   text-align: center;
   font-size: 25px;
   margin: 15px 0 0 0;
-<<<<<<< HEAD
-  color: #ffffff;
-=======
   color: #FFFFFF;
->>>>>>> 563eb1dc158ee346b8ba558566d3a9c48bd35645
 }
 
 /* BOTTOM PORTION OF THE MENU */
@@ -218,26 +170,15 @@ input:focus, textarea, button {
   width: 120px;
   height: 30px;
   border-radius: 50px;
-<<<<<<< HEAD
-  background: #ffffff;
-=======
   background: #FFFFFF;
->>>>>>> 563eb1dc158ee346b8ba558566d3a9c48bd35645
   font-weight: 900;
   border-style: none;
 }
 
 /* changes the color of all buttons when they are hovered over */
-<<<<<<< HEAD
-.menu-buttons:hover,
-#send-message-button:hover {
-  background: #7ba1a6;
-  color: #ffffff;
-=======
 .menu-buttons:hover, #send-message-button:hover {
   background: #7BA1A6;
   color: #FFFFFF;
->>>>>>> 563eb1dc158ee346b8ba558566d3a9c48bd35645
   box-shadow: -1px -2px 5px #303030;
 }
 
@@ -289,10 +230,7 @@ input:focus, textarea, button {
 }
 
 @media (max-width: 1159px) {
-<<<<<<< HEAD
-=======
 
->>>>>>> 563eb1dc158ee346b8ba558566d3a9c48bd35645
   /* For small screens (tablets, phones): */
   #content {
     width: 100%;
@@ -333,11 +271,8 @@ input:focus, textarea, button {
   }
 }
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 563eb1dc158ee346b8ba558566d3a9c48bd35645
 .submitted-message-box-1 {
   /*user image within the submitted message*/
   order: 1;
@@ -361,11 +296,7 @@ input:focus, textarea, button {
 }
 
 #username-content {
-<<<<<<< HEAD
-  color: #ffffff;
-=======
   color: #FFFFFF;
->>>>>>> 563eb1dc158ee346b8ba558566d3a9c48bd35645
   font-weight: 900;
   font-size: 18px;
   margin: 3px 15px 0 0;
@@ -382,11 +313,7 @@ input:focus, textarea, button {
 }
 
 .message-content-text {
-<<<<<<< HEAD
-  color: #c3c3c3;
-=======
   color: #C3C3C3;
->>>>>>> 563eb1dc158ee346b8ba558566d3a9c48bd35645
   height: auto;
   width: 60vw;
   font-size: 15px;
@@ -396,11 +323,7 @@ input:focus, textarea, button {
 }
 
 #like-button {
-<<<<<<< HEAD
-  background-color: rgba(89, 93, 114, 0.64);
-=======
   background-color: rgba(89, 93, 114, .64);
->>>>>>> 563eb1dc158ee346b8ba558566d3a9c48bd35645
   border-style: none;
   border-radius: 5px;
   margin: 0;
@@ -418,11 +341,7 @@ input:focus, textarea, button {
 }
 
 #thumbs-up-count {
-<<<<<<< HEAD
-  color: #7ba1a6;
-=======
   color: #7BA1A6;
->>>>>>> 563eb1dc158ee346b8ba558566d3a9c48bd35645
   font-weight: 400;
   display: inline;
   padding: 0;
@@ -445,11 +364,7 @@ input:focus, textarea, button {
   border-style: none;
   background: rgba(111, 111, 111, 0.28);
   box-shadow: -1px -2px 5px #303030;
-<<<<<<< HEAD
-  color: #ffffff;
-=======
   color: #FFFFFF;
->>>>>>> 563eb1dc158ee346b8ba558566d3a9c48bd35645
 }
 
 #send-message-button {
@@ -457,17 +372,9 @@ input:focus, textarea, button {
   height: 35px;
   margin: 0 0 0 15px;
   border-radius: 50px;
-<<<<<<< HEAD
-  background: #1f2326;
-=======
   background: #1F2326;
->>>>>>> 563eb1dc158ee346b8ba558566d3a9c48bd35645
   color: #707070;
   font-weight: 900;
   border-style: none;
   box-shadow: -1px -2px 5px #303030;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 563eb1dc158ee346b8ba558566d3a9c48bd35645

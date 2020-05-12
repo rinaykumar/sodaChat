@@ -9,13 +9,13 @@ import Profile4 from '../svg/profile4.png';
 import LikeBtn from '../svg/like-bttn.svg';
 import axios from 'axios';
 
+
+const ws = new WebSocket('ws://localhost:1234/ws');
+
 const Chatroom = ({ appUser, setAppUser }) => {
     const [message, setMessage] = React.useState('');
     const [messages, setMessages] = React.useState([]);
     const [profileNum, setProfileNum] = React.useState('');
-
-    // Setting username for testing until login auth is implemented
-    //setAppUser('user');
 
     const fetchMessages = () => {
         axios.get('/api/getAllMessages')
@@ -39,6 +39,24 @@ const Chatroom = ({ appUser, setAppUser }) => {
         );
     }
 
+    const addMessage = (stringMessage) => {
+        console.log(stringMessage.data); // incoming from server
+        setMessages((messages) => {
+            const newMessages = messages.slice(); // copy from item 0
+            newMessages.push(stringMessage.data);
+            console.log(newMessages);
+            return newMessages;
+        });
+    };
+
+    React.useEffect(() => {
+        console.log('Got the mesage');
+        // do something when component mounts
+        ws.addEventListener('message', addMessage);
+        return () => ws.removeEventListener('message', addMessage);
+    }, []);
+
+    // This grabs the current user's profile pic number for the sidebar
     const profilePic = () => {
         axios.post('/api/profilePic', appUser)
             .then((res) => {
@@ -48,11 +66,11 @@ const Chatroom = ({ appUser, setAppUser }) => {
             .catch(console.log);
 
         switch (profileNum) {
-            case 1:
+            case 0:
                 return Profile1
-            case 2:
+            case 1:
                 return Profile2
-            case 3:
+            case 2:
                 return Profile3
             default:
                 return Profile4
@@ -63,6 +81,8 @@ const Chatroom = ({ appUser, setAppUser }) => {
         console.log("From submitMessage");
         console.log(message);
         console.log(appUser);
+        ws.send(message);
+        setMessage('')
         const body = {
             text: message,
             user: appUser
@@ -88,8 +108,26 @@ const Chatroom = ({ appUser, setAppUser }) => {
         return obj.date;
     }
 
+    // This sets the profile pic for loaded messages and new messages
+    const parsePic = (message) => {
+        let obj = JSON.parse(message);
+        console.log("picNum:")
+        console.log(obj.picNum)
+        switch (obj.picNum) {
+            case "0":
+                return Profile1
+            case "1":
+                return Profile2
+            case "2":
+                return Profile3
+            default:
+                return Profile4
+        }
+    }
+
     React.useEffect(() => {
         fetchMessages();
+
     }, []);
 
     if (!appUser) {
@@ -146,7 +184,7 @@ const Chatroom = ({ appUser, setAppUser }) => {
                                 return (
                                     <div class="submitted-message">
                                         <div class="submitted-message-box-1">
-                                            <img class="submitted-message-image" src={profilePic()} alt="" />
+                                            <img class="submitted-message-image" src={parsePic(message)} alt="" />
                                         </div>
                                         <div class="submitted-message-box-2">
                                             <div class="message-content-header">

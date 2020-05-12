@@ -28,6 +28,7 @@ public class Server {
     MongoCollection<Document> messageCollection = db.getCollection("Messages");
     MongoCollection<Document> userCollection = db.getCollection("Users");
 
+    /* Not really needed, comment out for now
     // Adds a second initial message to db if it's not already there
     List<Document> initialMessage2 = messageCollection.find(new Document("user", "User Name 2"))
             .into(new ArrayList<>());
@@ -40,16 +41,17 @@ public class Server {
 
       messageCollection.insertOne(newMessage);
     }
+     */
 
     // Check if initial user is in database, if not then add
     List<Document> initialUser1 = userCollection.find(new Document("username", "user"))
-            .into(new ArrayList<>());
+      .into(new ArrayList<>());
 
     if (initialUser1.isEmpty()) {
       Document newUser = new Document()
-              .append("username", "user")
-              .append ("password", "password")
-              .append("profilePic", 1);
+        .append("username", "user")
+        .append ("password", "password")
+        .append("profilePic", 1);
 
       userCollection.insertOne(newUser);
     }
@@ -68,7 +70,7 @@ public class Server {
       AuthDTO authDTO = gson.fromJson(bodyString, AuthDTO.class);
 
       List<Document> user = userCollection.find(new Document("username", authDTO.username))
-              .into(new ArrayList<>());
+        .into(new ArrayList<>());
       if(user.size() != 1) {
         AuthResponseDTO responseDTO = new AuthResponseDTO(false, "User not found");
         return gson.toJson(responseDTO);
@@ -90,7 +92,7 @@ public class Server {
       AuthDTO authDTO = gson.fromJson(bodyString, AuthDTO.class);
 
       List<Document> user = userCollection.find(new Document("username", authDTO.username))
-              .into(new ArrayList<>());
+        .into(new ArrayList<>());
 
       if(!user.isEmpty()) {
         AuthResponseDTO authResponseDTO = new AuthResponseDTO(false, "User already exists");
@@ -101,9 +103,9 @@ public class Server {
       int profilePicNum = rand.nextInt(4);
 
       Document newUser = new Document()
-              .append("username", authDTO.username)
-              .append("password", authDTO.password)
-              .append("profilePic", profilePicNum);
+        .append("username", authDTO.username)
+        .append("password", authDTO.password)
+        .append("profilePic", profilePicNum);
       userCollection.insertOne(newUser);
       AuthResponseDTO authResponseDTO = new AuthResponseDTO(true, null);
 
@@ -113,7 +115,7 @@ public class Server {
     post("/api/addMessage", (req, res) -> {
       String bodyString = req.body();
       AddMessageDTO messageDTO = gson.fromJson(bodyString,
-              AddMessageDTO.class);
+        AddMessageDTO.class);
       // Add it to the list
       MessagesDAO messagesDAO = MessagesDAO.getInstance();
       messagesDAO.addMessage(messageDTO.text, messageDTO.user);

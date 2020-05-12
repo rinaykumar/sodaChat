@@ -13,36 +13,43 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.mongodb.client.model.Filters.eq;
+
 public class MessagesDAO {
 
-    private static MessagesDAO instance;
+  private static MessagesDAO instance;
 
-    Gson gson = new GsonBuilder()
-            .create();
+  Gson gson = new GsonBuilder()
+    .create();
 
-    private MessagesDAO(){
+  private MessagesDAO(){
 
-    }
+  }
 
-    // Open connection
-    MongoClient mongoClient = new MongoClient("localhost", 27017);
+  // Open connection
+  MongoClient mongoClient = new MongoClient("localhost", 27017);
 
-    public void addMessage(String text, String user) {
-        // Connect to mongo
-        MongoDatabase db = mongoClient.getDatabase("FinalDatabase");
-        MongoCollection<Document> MessagesCollection = db.getCollection("Messages");
+  public void addMessage(String text, String user) {
+    // Connect to mongo
+    MongoDatabase db = mongoClient.getDatabase("FinalDatabase");
+    MongoCollection<Document> MessagesCollection = db.getCollection("Messages");
+    MongoCollection<Document> userCollection = db.getCollection("Users");
 
-        // Create new DTO and convert to JSON
-        Date date = new Date();
-        AddMessageDTO newMessageDTO = new AddMessageDTO(text, user, date);
-        String messageJSON = gson.toJson(newMessageDTO);
+    // For setting profile pic
+    Document userToFind = userCollection.find(eq("username", user)).first();
+    String picNum = userToFind.get("profilePic").toString();
 
-        // Create new mongo Document from JSON
-        Document newMessage = Document.parse(messageJSON);
+    // Create new DTO and convert to JSON
+    Date date = new Date();
+    AddMessageDTO newMessageDTO = new AddMessageDTO(text, user, date, picNum);
+    String messageJSON = gson.toJson(newMessageDTO);
 
-        // Add Document to Collection
-        MessagesCollection.insertOne(newMessage);
-    }
+    // Create new mongo Document from JSON
+    Document newMessage = Document.parse(messageJSON);
+
+    // Add Document to Collection
+    MessagesCollection.insertOne(newMessage);
+  }
 
     /*
     public void deleteItem(String item, double price) {
@@ -62,23 +69,23 @@ public class MessagesDAO {
     }
     */
 
-    public MessagesListDTO getAllMessages() {
-        MongoDatabase db = mongoClient.getDatabase("FinalDatabase");
-        MongoCollection<Document> messagesCollection = db.getCollection("Messages");
-        List<String> messages = messagesCollection.find().into(new ArrayList<>())
-                .stream()
-                .map(document -> {
-                    document.remove("_id");
-                    return document.toJson();
-                })
-                .collect(Collectors.toList());
-        return new MessagesListDTO(messages);
-    }
+  public MessagesListDTO getAllMessages() {
+    MongoDatabase db = mongoClient.getDatabase("FinalDatabase");
+    MongoCollection<Document> messagesCollection = db.getCollection("Messages");
+    List<String> messages = messagesCollection.find().into(new ArrayList<>())
+      .stream()
+      .map(document -> {
+        document.remove("_id");
+        return document.toJson();
+      })
+      .collect(Collectors.toList());
+    return new MessagesListDTO(messages);
+  }
 
-    public static MessagesDAO getInstance() {
-        if(instance == null) {
-            instance = new MessagesDAO();
-        }
-        return instance;
+  public static MessagesDAO getInstance() {
+    if(instance == null) {
+      instance = new MessagesDAO();
     }
+    return instance;
+  }
 }
