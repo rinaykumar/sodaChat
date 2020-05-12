@@ -7,21 +7,27 @@ import Login from "./pages/Login";
 
 const App = () => {
   const [appUser, setAppUser] = React.useState('');
+  const [totalUsers, setTotalUsers] = React.useState(0);
+
+  // logs out the [USER]
+  const logout = (e) => {
+    setAppUser(null);
+  }
 
   return (
     <div>
       <BrowserRouter>
-      <Switch>
-        <Route path="/chatroom">
-          <Chatroom appUser={appUser} setAppUser={setAppUser} />
-        </Route>
-        <Route path="/signup">
-          <Signup appUser={appUser} setAppUser={setAppUser} />
-        </Route>
-        <Route path="/">
-          <Login appUser={appUser} setAppUser={setAppUser} />
-        </Route>
-      </Switch>
+        <Switch>
+          <Route path="/chatroom">
+            <Chatroom appUser={appUser} setAppUser={setAppUser} totalUsers={totalUsers} setTotalUsers={setTotalUsers}/>
+          </Route>
+          <Route path="/signup">
+            <Signup appUser={appUser} setAppUser={setAppUser} />
+          </Route>
+          <Route path="/">
+            <Login appUser={appUser} setAppUser={setAppUser} totalUsers={totalUsers} setTotalUsers={setTotalUsers}/>
+          </Route>
+        </Switch>
       </BrowserRouter>
     </div>
   );

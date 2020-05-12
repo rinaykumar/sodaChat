@@ -1,15 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,900&display=swap");
 
 body {
   background: #383838;
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   overflow: hidden;
 }
 
 /* removes the blue border once items are clicked */
-input:focus, textarea, button {
+input:focus,
+textarea,
+button {
   outline: none !important;
 }
 
@@ -27,7 +29,7 @@ input:focus, textarea, button {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgba(31, 35, 38, .60);
+  background: rgba(31, 35, 38, 0.6);
   border-radius: 50px;
 }
 
@@ -52,7 +54,7 @@ input:focus, textarea, button {
   }
 
   #sidebar {
-    background: #1F2326;
+    background: #1f2326;
     height: 100vh;
   }
 
@@ -65,7 +67,6 @@ input:focus, textarea, button {
 }
 
 @media (max-width: 1159px) {
-
   /* For small screens (tablets, phones): */
   #sidebar {
     width: 260px;
@@ -74,21 +75,21 @@ input:focus, textarea, button {
     left: -260px;
     height: 100vh;
     z-index: 999;
-    background: #1F2326;
+    background: #1f2326;
     color: #fff;
     transition: all 0.3s;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
   }
 
   #sidebarCollapse {
-    color: #7BA1A6;
+    color: #7ba1a6;
     background: #383838;
-    border-color: #7BA1A6;
+    border-color: #7ba1a6;
   }
 
   #sidebarCollapse:hover {
-    color: #FFF;
-    border-color: #FFF;
+    color: #fff;
+    border-color: #fff;
   }
 
   .left-menu-bar {
@@ -115,7 +116,7 @@ input:focus, textarea, button {
   }
 
   #dismiss:hover {
-    color: #7BA1A6;
+    color: #7ba1a6;
   }
 
   .overlay {
@@ -153,7 +154,26 @@ input:focus, textarea, button {
   text-align: center;
   font-size: 25px;
   margin: 15px 0 0 0;
-  color: #FFFFFF;
+  color: #ffffff;
+}
+
+.user-counter{
+  width: 210px;
+  height: 30px;
+  margin-top: 20px;
+  margin-left: 25px;
+  border-radius: 5px;
+  background: white;
+  color: black;
+  font-size: 18px;
+  font-weight: 900;
+  border-style: none;
+
+/* 
+  padding: 5px;
+  background: black;
+  color: white;
+  margin-bottom: 50px; */
 }
 
 /* BOTTOM PORTION OF THE MENU */
@@ -170,15 +190,16 @@ input:focus, textarea, button {
   width: 120px;
   height: 30px;
   border-radius: 50px;
-  background: #FFFFFF;
+  background: #ffffff;
   font-weight: 900;
   border-style: none;
 }
 
 /* changes the color of all buttons when they are hovered over */
-.menu-buttons:hover, #send-message-button:hover {
-  background: #7BA1A6;
-  color: #FFFFFF;
+.menu-buttons:hover,
+#send-message-button:hover {
+  background: #7ba1a6;
+  color: #ffffff;
   box-shadow: -1px -2px 5px #303030;
 }
 
@@ -230,7 +251,6 @@ input:focus, textarea, button {
 }
 
 @media (max-width: 1159px) {
-
   /* For small screens (tablets, phones): */
   #content {
     width: 100%;
@@ -271,8 +291,6 @@ input:focus, textarea, button {
   }
 }
 
-
-
 .submitted-message-box-1 {
   /*user image within the submitted message*/
   order: 1;
@@ -296,7 +314,7 @@ input:focus, textarea, button {
 }
 
 #username-content {
-  color: #FFFFFF;
+  color: #ffffff;
   font-weight: 900;
   font-size: 18px;
   margin: 3px 15px 0 0;
@@ -313,7 +331,7 @@ input:focus, textarea, button {
 }
 
 .message-content-text {
-  color: #C3C3C3;
+  color: #c3c3c3;
   height: auto;
   width: 60vw;
   font-size: 15px;
@@ -323,7 +341,7 @@ input:focus, textarea, button {
 }
 
 #like-button {
-  background-color: rgba(89, 93, 114, .64);
+  background-color: rgba(89, 93, 114, 0.64);
   border-style: none;
   border-radius: 5px;
   margin: 0;
@@ -341,7 +359,7 @@ input:focus, textarea, button {
 }
 
 #thumbs-up-count {
-  color: #7BA1A6;
+  color: #7ba1a6;
   font-weight: 400;
   display: inline;
   padding: 0;
@@ -364,7 +382,7 @@ input:focus, textarea, button {
   border-style: none;
   background: rgba(111, 111, 111, 0.28);
   box-shadow: -1px -2px 5px #303030;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 #send-message-button {
@@ -372,7 +390,7 @@ input:focus, textarea, button {
   height: 35px;
   margin: 0 0 0 15px;
   border-radius: 50px;
-  background: #1F2326;
+  background: #1f2326;
   color: #707070;
   font-weight: 900;
   border-style: none;

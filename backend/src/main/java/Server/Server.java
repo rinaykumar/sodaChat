@@ -1,7 +1,10 @@
 package Server;
 
+
 import DAO.MessagesDAO;
 import DTO.AddMessageDTO;
+import DTO.AuthDTO;
+import DTO.AuthResponseDTO;
 import DTO.MessagesListDTO;
 import com.google.gson.Gson;
 import com.mongodb.MongoClient;
@@ -11,8 +14,15 @@ import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+import static com.mongodb.client.model.Filters.eq;
 import static spark.Spark.*;
+
+//import static spark.Spark.*;
+//import DAO.MessagesDAO;
+//import DTO.AddMessageDTO;
+
 
 public class Server {
   private static List<String> items = new ArrayList<>();
@@ -24,6 +34,9 @@ public class Server {
     MongoDatabase db = mongoClient.getDatabase("FinalDatabase");
     // Get ref to collection
     MongoCollection<Document> messageCollection = db.getCollection("Messages");
+
+    MongoCollection<Document> userCollection = db.getCollection("Users");
+
 
     // Adds a second initial message to db if it's not already there
     List<Document> initialMessage2 = messageCollection.find(new Document("user", "User Name 2"))
@@ -38,21 +51,20 @@ public class Server {
       messageCollection.insertOne(newMessage);
     }
 
-    /*
-    // Check if initial user is in database, if not then add
-    List<Document> initialUser1 = userCollection.find(new Document("username", "user"))
-            .into(new ArrayList<>());
+      // Check if initial user is in database, if not then add
+      List<Document> initialUser1 = userCollection.find(new Document("username", "user"))
+              .into(new ArrayList<>());
 
-    if (initialUser1.isEmpty()) {
-      Document newUser = new Document()
-              .append("username", "user")
-              .append ("password", "password");
+      if (initialUser1.isEmpty()) {
+          Document newUser = new Document()
+                  .append("username", "user")
+                  .append ("password", "password")
+                  .append("profilePic", 1);
 
-      userCollection.insertOne(newUser);
-    }
-     */
+          userCollection.insertOne(newUser);
+      }
 
-    // Init Gson
+      // Init Gson
     Gson gson = new Gson();
 
     port(1234);
@@ -61,28 +73,52 @@ public class Server {
     webSocket("/ws", WebSocketHandler.class); // open socket and leave it open
     get("/hello", (req, res) -> "hi"); // test
 
-    /*
-    post("/api/authenticate", (req, res) -> {
-      String bodyString =   req.body();
+    post("api/authenticate",(req, res) -> {
+      String bodyString = req.body();
       AuthDTO authDTO = gson.fromJson(bodyString, AuthDTO.class);
-      List<Document> potentialUser = userCollection.find(new Document("username", authDTO.username))
+
+      List<Document> user = userCollection.find(new Document("username", authDTO.username))
               .into(new ArrayList<>());
-      if (potentialUser.size() != 1) {
-        AuthResponseDTO responseDTO =
-                new AuthResponseDTO(false, "User not found");
+      if(user.size() != 1) {
+        AuthResponseDTO responseDTO = new AuthResponseDTO(false, "User not found");
         return gson.toJson(responseDTO);
       }
-      Document userDocument = potentialUser.get(0);
-      if (!userDocument.getString("password").equals(authDTO.password)) {
-        AuthResponseDTO responseDTO =
-                new AuthResponseDTO(false, "Password is incorrect");
+
+      Document userDocument = user.get(0);
+      if(!userDocument.getString("password").equals(authDTO.password)) {
+        AuthResponseDTO responseDTO = new AuthResponseDTO(false, "Password is incorrect");
         return gson.toJson(responseDTO);
       }
-      AuthResponseDTO responseDTO =
-              new AuthResponseDTO(true, null);
+
+      AuthResponseDTO responseDTO = new AuthResponseDTO(true, null);
       return gson.toJson(responseDTO);
+
     });
-     */
+
+    post("api/register", (req, res) -> {
+      String bodyString = req.body();
+      AuthDTO authDTO = gson.fromJson(bodyString, AuthDTO.class);
+
+      List<Document> user = userCollection.find(new Document("username", authDTO.username))
+              .into(new ArrayList<>());
+
+      if(!user.isEmpty()) {
+        AuthResponseDTO authResponseDTO = new AuthResponseDTO(false, "User already exists");
+        return gson.toJson(authResponseDTO);
+      }
+
+        Random rand = new Random();
+        int profilePicNum = rand.nextInt(4);
+
+        Document newUser = new Document()
+                .append("username", authDTO.username)
+                .append("password", authDTO.password)
+                .append("profilePic", profilePicNum);
+        userCollection.insertOne(newUser);
+        AuthResponseDTO authResponseDTO = new AuthResponseDTO(true, null);
+
+        return gson.toJson(authResponseDTO);
+    });
 
     post("/api/addMessage", (req, res) -> {
       String bodyString = req.body();
@@ -95,7 +131,37 @@ public class Server {
       return "OK";
     });
 
-    /*
+
+    post("/api/profilePic", (req, res) -> {
+      String bodyString = req.body();
+      Document userToFind = userCollection.find(eq("username", bodyString)).first();
+      assert userToFind != null;
+      return userToFind.get("profilePic").toString();
+    });
+//
+//    post("/api/getUserCount" , (req,res) -> {
+//        String bodyString = req.body();
+//        AuthDTO authDTO = gson.fromJson(bodyString, AuthDTO.class);
+//        int userCount = authDTO.userCount;
+//        while(bodyString != null){
+//            userCount++;
+//        }
+////        for (int i = 0; i < 1000; i ++){
+////        userCount = i;
+////        }
+//        System.out.println(userCount);
+//        return gson.toJson(userCount);
+//    });
+
+
+    get("/api/getAllMessages", (req, res) -> {
+      MessagesDAO messagesDAO = MessagesDAO.getInstance();
+      MessagesListDTO list = messagesDAO.getAllMessages();
+      return gson.toJson(list);
+    });
+
+    /* Can be modified to delete users:
+
     post("/api/deleteItem", (req, res) -> {
       String bodyString = req.body();
       AddItemDTO itemDTO = gson.fromJson(bodyString,
@@ -108,11 +174,5 @@ public class Server {
       return "OK";
     });
      */
-
-    get("/api/getAllMessages", (req, res) -> {
-      MessagesDAO messagesDAO = MessagesDAO.getInstance();
-      MessagesListDTO list = messagesDAO.getAllMessages();
-      return gson.toJson(list);
-    });
   }
 }
