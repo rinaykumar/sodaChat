@@ -73,7 +73,7 @@ const Login = ({ appUser, setAppUser }) => {
               <div id="error">
                 {error && <strong>{error}</strong>}
               </div>
-              <h4></h4>
+              <br/>
               {/* Start of Login Form (requires Username & Password) */}
               <p class="centerText">Username:
                 <input className="username-input inputText" value={username} onChange={(e) => setUsername(e.target.value)} />
@@ -84,8 +84,7 @@ const Login = ({ appUser, setAppUser }) => {
               {/* <p id="resetPsswd" class="smallFontSz"><a class="links" href="#">Forgot Password?</a>
               </p> */}
               <button id="submitBttn" class="fontRobotoMono" disabled={!username || !password} onClick={handleLogIn}>Log in</button>
-              <br/>
-               <br/>   
+              <br/>   
               <p id="AccountBttn" class="smallFontSz"><Link className="links" to="/signup">Sign Up</Link></p>
             </div>
           </div>

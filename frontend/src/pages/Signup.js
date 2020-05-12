@@ -63,6 +63,7 @@ const Signup = ({ appUser, setAppUser }) => {
                 {error && <strong>{error}</strong>}
               </div>
               {/* Start of Login Form (requires Username & Password) */}
+            
               <p className="usernameText">Username:
                 <input className="username-input inputText" value={username} onChange={(e) => setUsername(e.target.value)} required="required" />
               </p>
@@ -73,11 +74,10 @@ const Signup = ({ appUser, setAppUser }) => {
                 <input className="retype-input inputText" type="password" required="required" />
               </p>
               <p className="checkboxText conditionsText">
-                <input className="conditionsBttn" type="checkbox" required="required" />I Accept Terms of Service and Privacy Policy
+                <input className="conditionsBttn" type="checkbox" required="required" />I accept the Terms of Service and Privacy Policy
               </p>
               <button id="submitBttn" class="fontRobotoMono" disabled={!username || !password} onClick={handleAuth}>Sign up</button>
               <div>
-                
               <p id="AccountBttn" className="smallFontSz"><Link className="links" to="/">Log In</Link></p>
               </div>
             </div>

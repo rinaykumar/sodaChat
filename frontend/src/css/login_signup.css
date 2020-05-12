@@ -233,8 +233,9 @@ a:active {
 #header-signIn-signup {
   margin: 0;
   padding: 20px 0 40px 0;
-  font-weight: 200;
+  font-weight: 300;
   font-family: 'Ubuntu', sans-serif;
+  color: #9EED8B;
 }
 
 /*Reset Password*/
