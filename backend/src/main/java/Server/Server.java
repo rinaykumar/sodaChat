@@ -2,7 +2,10 @@ package Server;
 
 import static spark.Spark.*;
 import DAO.MessagesDAO;
+import DAO.ProfileDAO;
 import DTO.AddMessageDTO;
+import DTO.ProfileListDTO;
+import DTO.UpdateProfileDTO;
 import DTO.AuthDTO;
 import DTO.AuthResponseDTO;
 import DTO.MessagesListDTO;
@@ -133,6 +136,38 @@ public class Server {
     get("/api/getAllMessages", (req, res) -> {
       MessagesDAO messagesDAO = MessagesDAO.getInstance();
       MessagesListDTO list = messagesDAO.getAllMessages();
+      return gson.toJson(list);
+    });
+
+    post("/api/updateProfile", (req, res) -> {
+      String bodyString = req.body();
+      UpdateProfileDTO itemDTO = gson.fromJson(bodyString,
+              UpdateProfileDTO.class);
+      // Add it to the list
+      ProfileDAO itemsDAO = ProfileDAO.getInstance();
+      itemsDAO.ChangeProfile(itemDTO.NewUsername, itemDTO.NewUserpassword);
+      System.out.println(bodyString);
+      System.out.println(items.size());
+      return "OK";
+    });
+
+    post("/api/deleteUser", (req, res) -> {
+      //just a prototype
+      //Will be modified later, should be delete current user's information.
+      String bodyString = req.body();
+      UpdateProfileDTO itemDTO = gson.fromJson(bodyString,
+              UpdateProfileDTO.class);
+      // Delete it from the list
+      ProfileDAO itemsDAO = ProfileDAO.getInstance();
+      itemsDAO.deleteUser(itemDTO.NewUsername, itemDTO.NewUserpassword);
+      System.out.println(bodyString);
+      System.out.println(items.size());
+      return "OK";
+    });
+
+    get("/api/getUpdatedProfile", (req, res) -> {
+      ProfileDAO itemDAO = ProfileDAO.getInstance();
+      ProfileListDTO list = itemDAO.getUpdatedProfile();
       return gson.toJson(list);
     });
 
