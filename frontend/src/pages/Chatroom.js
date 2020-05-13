@@ -123,6 +123,14 @@ const Chatroom = ({ appUser, setAppUser }) => {
         }
     }
 
+    const logoutUser = () => {
+        if(appUser){
+        setAppUser(null)
+        //setTotalUsers(totalUsers - 1)
+       }
+        return <Redirect to="/" />
+    }
+
     React.useEffect(() => {
         fetchMessages();
 
@@ -146,7 +154,7 @@ const Chatroom = ({ appUser, setAppUser }) => {
                         </div>
                         <div class="bottom-buttons">
                             <button class="menu-buttons" id="profile-bttn" type="button" name="profile">PROFILE</button>
-                            <button class="menu-buttons" id="logout-bttn" type="button" name="logout">LOGOUT</button>
+                            <button class="menu-buttons" id="logout-bttn" type="button" name="logout" onClick={logoutUser}>LOGOUT</button>
                         </div>
                     </div>
                 </div>
