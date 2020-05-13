@@ -10,4 +10,4 @@ public class AuthResponseDto
         this.success = success;
         this.error = error;
     }
-}git b
+}
