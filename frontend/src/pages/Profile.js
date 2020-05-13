@@ -8,6 +8,7 @@ import Profile3 from '../svg/profile3.png';
 import Profile4 from '../svg/profile4.png';
 import LikeBtn from '../svg/like-bttn.svg';
 import axios from 'axios';
+import '../css/profile.css';
 
 
 const Profile = ({ appUser, setAppUser }) => {
@@ -15,6 +16,7 @@ const Profile = ({ appUser, setAppUser }) => {
     const [password, setPassword] = React.useState('');
     const [error, setError] = React.useState('');
     const [usertype, setUserType] = React.useState('');
+    const [profileNum, setProfileNum] = React.useState('');
  
     return (
       <div>

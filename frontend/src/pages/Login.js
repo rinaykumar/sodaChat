@@ -5,7 +5,7 @@ import { Redirect, Link } from 'react-router-dom';
 import headerLogo from '../svg/chat-header.svg';
 // import sample chatroom video
 import video from '../videos/video.mp4';
-import "../css/login_signup.css";
+
 
 const Login = ({ appUser, setAppUser }) => {
   const [username, setUsername] = React.useState('');

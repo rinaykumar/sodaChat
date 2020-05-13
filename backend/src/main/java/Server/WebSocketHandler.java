@@ -1,4 +1,4 @@
-package demo;
+package Server;
 
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.*;
@@ -10,6 +10,17 @@ import java.util.concurrent.*;
 public class WebSocketHandler {
   // Store sessions if you want to, for example, broadcast a message to all users
   static Map<Session, Session> sessionMap = new ConcurrentHashMap<>();
+
+  public static void broadcast(String message){
+    sessionMap.keySet().forEach(session -> {
+      // loop over sessions
+      try{
+        session.getRemote().sendString(message); // send same message to all
+      }catch (Exception e){
+        e.printStackTrace();
+      }
+    });
+  }
 
   @OnWebSocketConnect
   public void connected(Session session) throws IOException {
