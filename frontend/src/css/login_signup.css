@@ -1,0 +1,281 @@
+/*Import Fonts*/
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Bellota&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Modak&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+
+/*======================GENERAL======================*/
+.background {
+  background: #383838;
+  width: 100vw;
+  height: 100vh;
+}
+/* removes the blue border once items are clicked */
+input:focus,
+textarea,
+button {
+  outline: none !important;
+}
+
+/*[START] Flex Box CSS*/
+.flexContainerCol {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 1049px) {
+  /* Wider than desktop */
+  .flexContainerRow {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 75px;
+  }
+}
+
+@media (min-width: 1050px) {
+  /* Wider than desktop */
+  .flexContainerRow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 75px;
+  }
+}
+
+.flexBox-1 {
+  flex: 1;
+  order: 1;
+  align-items: flex-start;
+}
+
+.flexBox-2 {
+  flex: 1;
+  order: 2;
+  align-items: flex-start;
+}
+
+.alignFlexCenter {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/*Bellota Font*/
+.fontBellota {
+  font-family: "Bellota", monospace;
+}
+
+.fontModak {
+  font-family: "Modak";
+}
+
+/*Centers Any Box Horizontally | Define width needed*/
+.centerBoxH {
+  margin: auto;
+}
+
+/*Centers text in the middle*/
+.centerText {
+  text-align: center;
+}
+
+.passwordText,
+.checkboxText,
+.usernameText {
+  margin-left: 62px;
+}
+
+.retypeText {
+  font-size: 14px;
+}
+
+/*resizes font size*/
+.smallFontSz {
+  font-size: 11px;
+}
+
+@media (min-width: 768px) {
+  /* Wider than desktop */
+  .smallFontMd {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Landscape phone to portrait tablet */
+  .smallFontMd {
+    font-size: 12px;
+  }
+}
+
+/*Links Styling*/
+.links {
+  text-decoration: none;
+}
+
+a:link {
+  color: inherit;
+}
+
+a:visited {
+  color: inherit;
+}
+
+a:hover {
+  color: #f2cb05;
+  text-decoration: none;
+}
+
+a:active {
+  color: #7ba1a6;
+  text-decoration: none;
+}
+
+/*======================SIGN-IN/SIGN-UP======================*/
+#headerLogo {
+  width: 300px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 1050px) {
+  #sampleVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  }
+}
+
+/* sample video disappears if screen is too small */
+@media (max-width: 1049px) {
+  #sampleVideo {
+    display: none !important;
+  }
+}
+
+.AccountBox {
+  background: #1f2326;
+  color: #ffffff;
+  margin-top: 20px;
+  border-radius: 20px;
+  box-shadow: -6px 6px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+/*Implements Size for Form Boxes*/
+#signInBox {
+  height: 340px;
+  width: 450px;
+}
+
+#signUpBox {
+  height: 402px;
+  width: 450px;
+}
+
+/*Input for UserName and Password*/
+.AccountBox p .inputText {
+  border-radius: 2px;
+  width: 200px;
+  border-style: none;
+  line-height: 20px;
+  padding-left: 5px;
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* input box to enter information */
+.username-input {
+  margin-left: 49px;
+}
+.password-input {
+  margin-left: 50px;
+}
+.retype-input {
+  margin-left: 48px;
+  /* font-size: 16px; */
+}
+
+/*radio circular button for SignUp*/
+.radioBttnInline-SignUp {
+  display: inline-block;
+  width: 100%;
+}
+
+.requiredClickBttn-SignUp {
+  float: left;
+  margin: 11px 10px 10px 16%;
+}
+
+/*Centers Any Image Horizontally*/
+#logo-img {
+  display: inline-block;
+  position: absolute;
+  margin-left: 45%;
+  margin-right: 50%;
+  margin-top: -25px;
+}
+
+/*Sign In or Sign Up button*/
+#AccountBttn {
+  text-align: right;
+  padding: 15px 25px 0 0;
+  
+}
+
+/*Sign-In | Sign-Up Header*/
+#header-signIn-signup {
+  margin: 0;
+  padding: 20px 0 40px 0;
+  font-weight: 300;
+  font-family: 'Ubuntu', sans-serif;
+  color: #9EED8B;
+}
+
+/*Reset Password*/
+#resetPsswd {
+  width: 106px;
+  margin-left: 67%;
+}
+
+.conditionsBttn {
+  margin: 20px 20px 0 0;
+}
+
+.conditionsText {
+  font-size: 11px;
+}
+
+/*Submit Form Button*/
+#submitBttn {
+  margin: 40px 0 20px 40%;
+  border-style: solid;
+  border-radius: 20px;
+  width: 100px;
+  background: none;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+#submitBttn:hover {
+  background-color: #ffffff;
+  color: #383838;
+}
+
+/* error message */
+#error {
+  text-align: center;
+  font-style: italic;
+  color: #a31918;
+  font-weight: 100;
+  font-size: 11px;
+  margin: -20px 0 10px 0;
+}
