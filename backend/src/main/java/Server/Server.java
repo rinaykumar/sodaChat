@@ -1,4 +1,6 @@
 package Server;
+import com.mongodb.BasicDBObject;
+import org.apache.log4j.Logger;
 
 import static spark.Spark.*;
 import DAO.MessagesDAO;
@@ -11,7 +13,9 @@ import DTO.AuthResponseDTO;
 import DTO.MessagesListDTO;
 import com.google.gson.Gson;
 import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import static com.mongodb.client.model.Filters.*;
 import org.bson.Document;
@@ -141,34 +145,42 @@ public class Server {
 
     post("/api/updateProfile", (req, res) -> {
       String bodyString = req.body();
-      UpdateProfileDTO itemDTO = gson.fromJson(bodyString,
+      UpdateProfileDTO ProfileDTO = gson.fromJson(bodyString,
               UpdateProfileDTO.class);
       // Add it to the list
-      ProfileDAO itemsDAO = ProfileDAO.getInstance();
-      itemsDAO.ChangeProfile(itemDTO.NewUsername, itemDTO.NewUserpassword);
+      ProfileDAO ProfileDAO = ProfileDAO.getInstance();
+      ProfileDAO.ChangeProfile(ProfileDTO.Username, ProfileDTO.Userpassword);
       System.out.println(bodyString);
       System.out.println(items.size());
       return "OK";
     });
 
     post("/api/deleteUser", (req, res) -> {
-      //just a prototype
-      //Will be modified later, should be delete current user's information.
       String bodyString = req.body();
-      UpdateProfileDTO itemDTO = gson.fromJson(bodyString,
-              UpdateProfileDTO.class);
-      // Delete it from the list
-      ProfileDAO itemsDAO = ProfileDAO.getInstance();
-      itemsDAO.deleteUser(itemDTO.NewUsername, itemDTO.NewUserpassword);
-      System.out.println(bodyString);
-      System.out.println(items.size());
-      return "OK";
+      AuthDTO authDTO = gson.fromJson(bodyString, AuthDTO.class);
+
+      List<Document> user = userCollection.find(new Document("username", authDTO.username))
+              .into(new ArrayList<>());
+
+      if(!user.isEmpty()) {
+        BasicDBObject theQuery = new BasicDBObject();
+        theQuery.put("username", authDTO.username);
+        userCollection.deleteMany(theQuery);
+      }
+
     });
 
-    get("/api/getUpdatedProfile", (req, res) -> {
-      ProfileDAO itemDAO = ProfileDAO.getInstance();
-      ProfileListDTO list = itemDAO.getUpdatedProfile();
-      return gson.toJson(list);
+    get("/api/getProfile", (req, res) -> {
+
+      FindIterable<Document> fi = userCollection.find();
+      MongoCursor<Document> cursor = fi.iterator();
+      try {
+        while(cursor.hasNext()) {
+          return gson.toJson(cursor.next());
+        }
+      } finally {
+        cursor.close();
+      }
     });
 
     /* Can be modified to delete users:

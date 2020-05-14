@@ -1,12 +1,15 @@
+/*
+Not needed, save for further action.
 package DTO;
 
 public class UpdateProfileDTO {
-    public final String NewUsername;
-    public final String NewUserpassword;
+    public final String Username;
+    public final String Userpassword;
 
-    public UpdateProfileDTO(String newUsername, String newUserpassword) {
-        this.NewUsername = newUsername;
-        this.NewUserpassword = newUserpassword;
+    public UpdateProfileDTO(String Username, String Userpassword) {
+        this.Username = Username;
+        this.Userpassword = Userpassword;
     }
     
 }
+*/

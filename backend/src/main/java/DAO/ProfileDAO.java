@@ -1,3 +1,6 @@
+/*
+Not Needed, save for further action
+
 package DAO;
 
 import DTO.UpdateProfileDTO;
@@ -55,7 +58,7 @@ public class ProfileDAO {
         itemsCollection.findOneAndDelete(newItem);
     }
 
-    public ProfileListDTO getUpdatedProfile() {
+    public ProfileListDTO getProfile() {
         MongoDatabase db = mongoClient.getDatabase("FinalDatabase");
         MongoCollection<Document> itemsCollection = db.getCollection("Profile");
         List<String> items = itemsCollection.find().into(new ArrayList<>())
@@ -76,3 +79,5 @@ public class ProfileDAO {
         return instance;
     }
 }
+
+ */

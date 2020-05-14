@@ -1,3 +1,5 @@
+/*
+Not needed, save for further action
 package DTO;
 
 import java.util.List;
@@ -9,3 +11,4 @@ public class ProfileListDTO {
         this.ProfileItems = profileItems;
     }
 }
+*/
