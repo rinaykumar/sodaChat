@@ -9,7 +9,6 @@ import Profile4 from '../svg/profile4.png';
 import LikeBtn from '../svg/like-bttn.svg';
 import axios from 'axios';
 
-
 const ws = new WebSocket('ws://localhost:1234/ws');
 
 const Chatroom = ({ appUser, setAppUser }) => {
@@ -29,13 +28,11 @@ const Chatroom = ({ appUser, setAppUser }) => {
     const ScrollMessages = ({ messages }) => {
         const lastMessageRef = React.useRef(null);
         const scrolltoBottom = () => {
-            lastMessageRef.current.scrollIntoView({ behavior: "smooth", duration: 10000, spy: "true" });
+            lastMessageRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start', duration: 10000});
         }
         React.useEffect(scrolltoBottom, [messages]);
         return (
-            <div>
-                <div ref={lastMessageRef} />
-            </div>
+            <div ref={lastMessageRef} />
         );
     }
 
@@ -125,6 +122,14 @@ const Chatroom = ({ appUser, setAppUser }) => {
         }
     }
 
+    const logoutUser = () => {
+        if(appUser){
+        setAppUser(null)
+        //setTotalUsers(totalUsers - 1)
+       }
+        return <Redirect to="/" />
+    }
+
     React.useEffect(() => {
         fetchMessages();
 
@@ -148,7 +153,7 @@ const Chatroom = ({ appUser, setAppUser }) => {
                         </div>
                         <div class="bottom-buttons">
                             <button class="menu-buttons" id="profile-bttn" type="button" name="profile">PROFILE</button>
-                            <button class="menu-buttons" id="logout-bttn" type="button" name="logout">LOGOUT</button>
+                            <button class="menu-buttons" id="logout-bttn" type="button" name="logout" onClick={logoutUser}>LOGOUT</button>
                         </div>
                     </div>
                 </div>

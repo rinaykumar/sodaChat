@@ -38,49 +38,53 @@ const Signup = ({ appUser, setAppUser }) => {
 
   return (
     <div className="background">
+      <video id='sampleVideo' autoPlay loop muted>
+        <source src={video} type='video/mp4' />
+      </video>
       <div className="flexContainerRow">
         {/* ======== Sign Up Box - [LEFT] ======== */}
         <div className="flexBox-1">
-          <img id="headerLogo" src={headerLogo} alt="Logo" />
+          {/* <img id="headerLogo" src={headerLogo} alt="Logo" /> */}
+          <br/>
+          <br/>
           <div id="signUpBox" className="AccountBox centerBoxH flexContainerCol fontRobotoMono">
             {/* Nav in the top-right */}
-            <div className="flexBox-1">
+            {/* <div className="flexBox-1">
               <p id="AccountBttn" className="smallFontSz">
                 <Link className="links" to="/">Sign In</Link>
               </p>
-            </div>
+            </div> */}
             {/* sign in contents */}
             <div className="flexBox-2">
               {/* Header */}
-              <h4 id="header-signIn-signup" class="centerText"><em>WELCOME!</em></h4>
+              <h1 id="header-signIn-signup" class="centerText"><em>sodaChat</em></h1>
               {/* error message */}
               <div id="error">
                 {error && <strong>{error}</strong>}
               </div>
               {/* Start of Login Form (requires Username & Password) */}
-              <p className="usernameText">UserName:
+            
+              <p className="usernameText">Username:
                 <input className="username-input inputText" value={username} onChange={(e) => setUsername(e.target.value)} required="required" />
               </p>
               <p className="passwordText">Password:
                 <input className="password-input inputText" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required="required" />
               </p>
-              <p className="centerText retypeText">Retype Password:
+              <p className="centerText retypeText">Confirm PW:
                 <input className="retype-input inputText" type="password" required="required" />
               </p>
-              <p className="centerText conditionsText">
-                <input className="conditionsBttn" type="radio" required="required" />
-                I Accept Terms of Services and Privacy Policy
+              <p className="checkboxText conditionsText">
+                <input className="conditionsBttn" type="checkbox" required="required" />I accept the Terms of Service and Privacy Policy
               </p>
-              <button id="submitBttn" class="fontRobotoMono" disabled={!username || !password} onClick={handleAuth}>Register</button>
+              <button id="submitBttn" class="fontRobotoMono" disabled={!username || !password} onClick={handleAuth}>Sign up</button>
+              <div>
+              <p id="AccountBttn" className="smallFontSz"><Link className="links" to="/">Log In</Link></p>
+              </div>
             </div>
           </div>
         </div>
         {/* ======== Sample Chatroom Video - [RIGHT] ======== */}
-        <div className="flexBox-2">
-          <video id='sampleVideo' autoPlay loop muted>
-            <source src={video} type='video/mp4' />
-          </video>
-        </div>
+        
       </div>
     </div>
   );

@@ -49,44 +49,47 @@ const Login = ({ appUser, setAppUser }) => {
   return (
 
     <div className="background">
+      <video id='sampleVideo' autoPlay loop muted>
+            <source src={video} type='video/mp4' />
+      </video>
       <div className="flexContainerRow">
         {/* ======== Sign In Box - [LEFT] ======== */}
         <div className="flexBox-1">
-          <img id="headerLogo" src={headerLogo} alt="Logo" />
+          {/* <img id="headerLogo" src={headerLogo} alt="Logo" /> */}
+          <br/>
+          <br/>
           <div id="signInBox" className="AccountBox centerBoxH flexContainerCol fontRobotoMono">
             {/* Nav in the top-right */}
-            <div className="flexBox-1">
+            {/* <div className="flexBox-1">
               <p id="AccountBttn" class="smallFontSz">
                 <Link className="links" to="/signup">Sign Up</Link>
               </p>
-            </div>
+            </div> */}
             {/* sign in contents */}
             <div className="flexBox-2">
               {/* Header */}
-              <h4 id="header-signIn-signup" class="centerText"><em>WELCOME BACK!</em></h4>
+              <h1 id="header-signIn-signup" class="centerText"><em>sodaChat</em></h1>
               {/* error message */}
               <div id="error">
                 {error && <strong>{error}</strong>}
               </div>
+              <br/>
               {/* Start of Login Form (requires Username & Password) */}
-              <p class="centerText">UserName:
+              <p class="centerText">Username:
                 <input className="username-input inputText" value={username} onChange={(e) => setUsername(e.target.value)} />
               </p>
               <p class="centerText">Password:
                 <input className="password-input inputText" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
               </p>
-              <p id="resetPsswd" class="smallFontSz"><a class="links" href="#">Forgot Password?</a>
-              </p>
+              {/* <p id="resetPsswd" class="smallFontSz"><a class="links" href="#">Forgot Password?</a>
+              </p> */}
               <button id="submitBttn" class="fontRobotoMono" disabled={!username || !password} onClick={handleLogIn}>Log in</button>
+              <br/>   
+              <p id="AccountBttn" class="smallFontSz"><Link className="links" to="/signup">Sign Up</Link></p>
             </div>
           </div>
         </div>
         {/* ======== Sample Chatroom Video - [RIGHT] ======== */}
-        <div className="flexBox-2">
-          <video id='sampleVideo' autoPlay loop muted>
-            <source src={video} type='video/mp4' />
-          </video>
-        </div>
       </div>
     </div>
   );

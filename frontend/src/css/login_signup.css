@@ -2,10 +2,11 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Bellota&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Modak&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
 
 /*======================GENERAL======================*/
 .background {
-  background: #595d72;
+  background: #383838;
   width: 100vw;
   height: 100vh;
 }
@@ -82,6 +83,7 @@ button {
 }
 
 .passwordText,
+.checkboxText,
 .usernameText {
   margin-left: 62px;
 }
@@ -142,9 +144,11 @@ a:active {
 
 @media (min-width: 1050px) {
   #sampleVideo {
-    margin-top: 80px;
-    padding: 10px;
-    width: 600px;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
   }
 }
 
@@ -188,14 +192,14 @@ a:active {
 
 /* input box to enter information */
 .username-input {
-  margin-left: 45px;
+  margin-left: 49px;
 }
 .password-input {
   margin-left: 50px;
 }
 .retype-input {
-  margin-left: 12px;
-  font-size: 16px;
+  margin-left: 48px;
+  /* font-size: 16px; */
 }
 
 /*radio circular button for SignUp*/
@@ -222,19 +226,22 @@ a:active {
 #AccountBttn {
   text-align: right;
   padding: 15px 25px 0 0;
+  
 }
 
 /*Sign-In | Sign-Up Header*/
 #header-signIn-signup {
   margin: 0;
   padding: 20px 0 40px 0;
-  font-weight: 200;
+  font-weight: 300;
+  font-family: 'Ubuntu', sans-serif;
+  color: #9EED8B;
 }
 
 /*Reset Password*/
 #resetPsswd {
   width: 106px;
-  margin-left: 64%;
+  margin-left: 67%;
 }
 
 .conditionsBttn {
@@ -242,12 +249,12 @@ a:active {
 }
 
 .conditionsText {
-  font-size: 15px;
+  font-size: 11px;
 }
 
 /*Submit Form Button*/
 #submitBttn {
-  margin: 40px 0 40px 40%;
+  margin: 40px 0 20px 40%;
   border-style: solid;
   border-radius: 20px;
   width: 100px;
