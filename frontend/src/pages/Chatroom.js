@@ -9,7 +9,6 @@ import Profile4 from '../svg/profile4.png';
 import LikeBtn from '../svg/like-bttn.svg';
 import axios from 'axios';
 
-
 const ws = new WebSocket('ws://localhost:1234/ws');
 
 const Chatroom = ({ appUser, setAppUser }) => {
