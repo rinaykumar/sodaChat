@@ -57,7 +57,7 @@ const Signup = ({ appUser, setAppUser }) => {
             {/* sign in contents */}
             <div className="flexBox-2">
               {/* Header */}
-              <h1 id="header-signIn-signup" class="centerText"><em>soda</em></h1>
+              <h1 id="header-signIn-signup" class="centerText"><em>sodaChat</em></h1>
               {/* error message */}
               <div id="error">
                 {error && <strong>{error}</strong>}
