@@ -1,16 +1,13 @@
 package Server;
+import DTO.*;
 import com.mongodb.BasicDBObject;
 import org.apache.log4j.Logger;
 
 import static spark.Spark.*;
 import DAO.MessagesDAO;
 import DAO.ProfileDAO;
-import DTO.AddMessageDTO;
 import DTO.ProfileListDTO;
 import DTO.UpdateProfileDTO;
-import DTO.AuthDTO;
-import DTO.AuthResponseDTO;
-import DTO.MessagesListDTO;
 import com.google.gson.Gson;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
@@ -19,6 +16,8 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import static com.mongodb.client.model.Filters.*;
 import org.bson.Document;
+import org.bson.conversions.Bson;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -144,15 +143,23 @@ public class Server {
     });
 
     post("/api/updateProfile", (req, res) -> {
+      //this one is quite strange to me, much to work on
       String bodyString = req.body();
-      UpdateProfileDTO ProfileDTO = gson.fromJson(bodyString,
-              UpdateProfileDTO.class);
-      // Add it to the list
-      ProfileDAO ProfileDAO = ProfileDAO.getInstance();
-      ProfileDAO.ChangeProfile(ProfileDTO.Username, ProfileDTO.Userpassword);
-      System.out.println(bodyString);
-      System.out.println(items.size());
-      return "OK";
+      AuthDTO authDTO = gson.fromJson(bodyString, AuthDTO.class);
+      ProfileDTO profileDTO = gson.fromJson(bodyString,ProfileDTO.class);
+
+      Document userfound = userCollection.find(new Document("username", authDTO.username))
+              .first();
+
+      if(userfound != null){
+        Bson updatedvalue = new Document("username",profileDTO.Newname);
+        Bson updateopt = new Document("$set", updatedvalue);
+        userCollection.updateOne(userfound, updateopt);
+
+        Bson updatedvalue2 = new Document("password",profileDTO.Newpassword);
+        Bson updateopt2 = new Document("$set", updatedvalue2);
+        userCollection.updateOne(userfound, updateopt2);
+      }
     });
 
     post("/api/deleteUser", (req, res) -> {
