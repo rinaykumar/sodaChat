@@ -11,11 +11,12 @@ import axios from 'axios';
 
 const ws = new WebSocket('ws://localhost:1234/ws');
 
-const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
+const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers}) => {
     // const [totalUsers, setTotalUsers] = React.useState(0);
     const [message, setMessage] = React.useState('');
     const [messages, setMessages] = React.useState([]);
     const [profileNum, setProfileNum] = React.useState('');
+    // const [users ,setUsers] = React.useEffect([]);
 
     // Setting username for testing until login auth is implemented
     //setAppUser('user');
@@ -31,39 +32,27 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
 
     const ScrollMessages = ({ messages }) => {
         const lastMessageRef = React.useRef(null);
-        React.useEffect(() => {
-            lastMessageRef.current.scrollIntoView({ behavior: "smooth", duration: 1000 });
-        }, [messages]);
+        const scrolltoBottom = () => {
+            lastMessageRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start', duration: 10000 });
+        }
+        React.useEffect(scrolltoBottom, [messages]);
         return (
-            <div>
-                <div ref={lastMessageRef} />
-            </div>
+            <div ref={lastMessageRef} />
         );
     }
-
-    const addMessage = (stringMessage) => {
-        console.log(stringMessage.data); // incoming from server
-        setMessages((messages) => {
-          const newMessages = messages.slice(); // copy from item 0
-          newMessages.push(stringMessage.data);
-          console.log(newMessages);
-          return newMessages;
-        });
-      };
-
-      React.useEffect(() => {
+     
+    React.useEffect(() => {
+        fetchMessages()
         console.log('Got the mesage');
         // do something when component mounts
-        ws.addEventListener('message', addMessage);
-        return () => ws.removeEventListener('message', addMessage);
-      }, []);
-
-console.log(totalUsers)
-
+        ws.addEventListener('message', fetchMessages);
+        return () => ws.removeEventListener('message', fetchMessages);
+      });
+      
     const profilePic = () => {
         axios.post('/api/profilePic', appUser)
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 setProfileNum(res.data);
             })
             .catch(console.log);
@@ -83,18 +72,33 @@ console.log(totalUsers)
     const submitMessage = () => {
         console.log("From submitMessage");
         console.log(message);
-        console.log(appUser);
+        // console.log(appUser);
+        // addUsers(appUser)
         ws.send(message)
+        // ws.send(appUser);
         setMessage('')
         const body = {
             text: message,
             user: appUser
         };
+        // ws.send(body.text);
         axios.post('/api/addMessage', body)
             .then(() => setMessage(''))
             .then(() => fetchMessages())
             .catch(console.log);
     };
+
+    // const addUsers = (user) => {
+    //     if(user !== appUser){
+    //     const newUser = user;
+    //    const newUsers = [...users, newUser];
+        
+    //   setUsers(newUsers)
+    //   const totalUserCount = newUsers.length;
+    //   setTotalUsers(totalUserCount)}
+    //   return totalUsers
+    // }
+
 
     const parseText = (message) => {
         let obj = JSON.parse(message);
