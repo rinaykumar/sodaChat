@@ -118,7 +118,7 @@ public class Server {
         AddMessageDTO.class);
       // Add it to the list
       MessagesDAO messagesDAO = MessagesDAO.getInstance();
-      messagesDAO.addMessage(messageDTO.text, messageDTO.user);
+      messagesDAO.addMessage(messageDTO.text, messageDTO.user, messageDTO.thumbsUp);
       System.out.println(bodyString);
       return "OK";
     });

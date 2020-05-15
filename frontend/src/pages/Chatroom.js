@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from "react";
 import { Redirect } from 'react-router-dom';
 import '../css/chatroom.css';
 import Selfie from '../svg/selfie.jpg';
@@ -15,6 +15,7 @@ const Chatroom = ({ appUser, setAppUser }) => {
     const [message, setMessage] = React.useState('');
     const [messages, setMessages] = React.useState([]);
     const [profileNum, setProfileNum] = React.useState('');
+    const [thumbsUp, setThumbsUp] = React.useState('');
 
     const fetchMessages = () => {
         axios.get('/api/getAllMessages')
@@ -25,10 +26,22 @@ const Chatroom = ({ appUser, setAppUser }) => {
             .catch(console.log);
     };
 
+
+    const likeMessage = () => {
+        let currentLikes = parseLikes(message) + 1;
+        const body = {
+            likes: currentLikes
+        };
+        axios.post('/api/updateLikes', body)
+            .then(() => setThumbsUp(currentLikes))
+            .catch(console.log);
+
+    }
+
     const ScrollMessages = ({ messages }) => {
         const lastMessageRef = React.useRef(null);
         const scrolltoBottom = () => {
-            lastMessageRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start', duration: 10000});
+            lastMessageRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start', duration: 10000 });
         }
         React.useEffect(scrolltoBottom, [messages]);
         return (
@@ -47,7 +60,7 @@ const Chatroom = ({ appUser, setAppUser }) => {
     };
 
     React.useEffect(() => {
-        console.log('Got the mesage');
+        console.log('Got the message');
         // do something when component mounts
         ws.addEventListener('message', addMessage);
         return () => ws.removeEventListener('message', addMessage);
@@ -82,10 +95,12 @@ const Chatroom = ({ appUser, setAppUser }) => {
         setMessage('')
         const body = {
             text: message,
-            user: appUser
+            user: appUser,
+            likes: thumbsUp
         };
         axios.post('/api/addMessage', body)
             .then(() => setMessage(''))
+            .then(() => setThumbsUp(0))
             .then(() => fetchMessages())
             .catch(console.log);
     };
@@ -98,6 +113,11 @@ const Chatroom = ({ appUser, setAppUser }) => {
     const parseUser = (message) => {
         let obj = JSON.parse(message);
         return obj.user;
+    }
+
+    const parseLikes = (message) => {
+        let obj = JSON.parse(message);
+        return obj.thumbsUp;
     }
 
     const parseDate = (message) => {
@@ -123,10 +143,10 @@ const Chatroom = ({ appUser, setAppUser }) => {
     }
 
     const logoutUser = () => {
-        if(appUser){
-        setAppUser(null)
-        //setTotalUsers(totalUsers - 1)
-       }
+        if (appUser) {
+            setAppUser(null)
+            //setTotalUsers(totalUsers - 1)
+        }
         return <Redirect to="/" />
     }
 
@@ -142,6 +162,7 @@ const Chatroom = ({ appUser, setAppUser }) => {
     return (
         <div>
             <div class="flexbox">
+                {/* Sidebar */}
                 <div id="sidebar">
                     <div id="dismiss">
                         <i class="fas fa-arrow-left"></i>
@@ -198,9 +219,9 @@ const Chatroom = ({ appUser, setAppUser }) => {
                                             </div>
                                             <div class="message-content-text">
                                                 <p>{parseText(message)}</p>
-                                                <button id="like-button" type="button" name="like-button">
+                                                <button id="like-button" type="button" name="like-button" onClick={likeMessage}>
                                                     <img id="thumbs-up" src={LikeBtn} alt="" />
-                                                    <p id="thumbs-up-count">0</p>
+                                                    <p id="thumbs-up-count">{parseLikes(message)}</p>
                                                 </button>
                                             </div>
                                         </div>
