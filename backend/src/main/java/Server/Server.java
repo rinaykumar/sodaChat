@@ -141,7 +141,7 @@ public class Server {
       MessagesListDTO list = messagesDAO.getAllMessages();
       return gson.toJson(list);
     });
-
+/*
     post("/api/updateProfile", (req, res) -> {
       //this one is quite strange to me, much to work on
       String bodyString = req.body();
@@ -152,6 +152,7 @@ public class Server {
               .first();
 
       if(userfound != null){
+
         Bson updatedvalue = new Document("username",profileDTO.Newname);
         Bson updateopt = new Document("$set", updatedvalue);
         userCollection.updateOne(userfound, updateopt);
@@ -159,10 +160,42 @@ public class Server {
         Bson updatedvalue2 = new Document("password",profileDTO.Newpassword);
         Bson updateopt2 = new Document("$set", updatedvalue2);
         userCollection.updateOne(userfound, updateopt2);
-      }
-    });
 
-    post("/api/deleteUser", (req, res) -> {
+      }
+
+    });
+*/
+      post("/api/changeusername", (req, res) -> {
+          //this one is quite strange to me, much to work on
+          String bodyString = req.body();
+          AuthDTO authDTO = gson.fromJson(bodyString, AuthDTO.class);
+          List<Document> user = userCollection.find(new Document("username", authDTO.username))
+                  .into(new ArrayList<>());
+
+          if(user.size() != 1) {
+              Document userDocument = user.get(0);
+              Bson updatedvalue = new Document("username",authDTO.username);
+              Bson updateopt = new Document("$set", updatedvalue);
+              userCollection.updateOne(userDocument, updateopt);
+          }
+      });
+
+      post("/api/changepassword", (req, res) -> {
+          //this one is quite strange to me, much to work on
+          String bodyString = req.body();
+          AuthDTO authDTO = gson.fromJson(bodyString, AuthDTO.class);
+          List<Document> user = userCollection.find(new Document("username", authDTO.password))
+                  .into(new ArrayList<>());
+
+          if(user.size() != 1) {
+              Document userDocument = user.get(0);
+              Bson updatedvalue = new Document("username",authDTO.password);
+              Bson updateopt = new Document("$set", updatedvalue);
+              userCollection.updateOne(userDocument, updateopt);
+          }
+      });
+
+      post("/api/deleteUser", (req, res) -> {
       String bodyString = req.body();
       AuthDTO authDTO = gson.fromJson(bodyString, AuthDTO.class);
 
@@ -176,7 +209,7 @@ public class Server {
       }
 
     });
-
+/*
     get("/api/getProfile", (req, res) -> {
 
       FindIterable<Document> fi = userCollection.find();
@@ -188,9 +221,10 @@ public class Server {
       } finally {
         cursor.close();
       }
+
     });
 
-    /* Can be modified to delete users:
+    Can be modified to delete users:
 
     post("/api/deleteItem", (req, res) -> {
       String bodyString = req.body();
