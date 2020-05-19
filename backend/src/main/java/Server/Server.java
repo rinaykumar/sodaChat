@@ -1,18 +1,12 @@
 package Server;
 import DTO.*;
 import com.mongodb.BasicDBObject;
-import org.apache.log4j.Logger;
 
 import static spark.Spark.*;
 import DAO.MessagesDAO;
-import DAO.ProfileDAO;
-import DTO.ProfileListDTO;
-import DTO.UpdateProfileDTO;
 import com.google.gson.Gson;
 import com.mongodb.MongoClient;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import static com.mongodb.client.model.Filters.*;
 import org.bson.Document;
@@ -178,6 +172,7 @@ public class Server {
               Bson updateopt = new Document("$set", updatedvalue);
               userCollection.updateOne(userDocument, updateopt);
           }
+          return "OK";
       });
 
       post("/api/changepassword", (req, res) -> {
@@ -193,6 +188,7 @@ public class Server {
               Bson updateopt = new Document("$set", updatedvalue);
               userCollection.updateOne(userDocument, updateopt);
           }
+          return "OK";
       });
 
       post("/api/deleteUser", (req, res) -> {
@@ -201,13 +197,15 @@ public class Server {
 
       List<Document> user = userCollection.find(new Document("username", authDTO.username))
               .into(new ArrayList<>());
+        System.out.println(bodyString);
+        System.out.println(authDTO.username);
 
       if(!user.isEmpty()) {
         BasicDBObject theQuery = new BasicDBObject();
         theQuery.put("username", authDTO.username);
-        userCollection.deleteMany(theQuery);
+        userCollection.deleteOne(theQuery);
       }
-
+          return "delete complete";
     });
 /*
     get("/api/getProfile", (req, res) -> {
