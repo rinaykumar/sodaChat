@@ -64,12 +64,12 @@ const Profile = ({ appUser, setAppUser }) => {
 
   const changepassword = () => {
     console.log(appUser);
-    console.log(Newusername);
+    console.log(password);
     const body = {
       username: appUser,
-      password: Newusername,
+      password: password,
     };
-    axios.post('/api/changeusername', body)
+    axios.post('/api/changepassword', body)
       .then((res) => {
         console.log(res.data);
         if (res.data.success) {

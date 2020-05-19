@@ -202,14 +202,17 @@ public class Server {
           //this one is quite strange to me, much to work on
           String bodyString = req.body();
           AuthDTO authDTO = gson.fromJson(bodyString, AuthDTO.class);
-          List<Document> user = userCollection.find(new Document("username", authDTO.password))
-                  .into(new ArrayList<>());
+          Document found = userCollection.find(new Document("username",authDTO.username)).first();
 
-          if(user.size() != 1) {
-              Document userDocument = user.get(0);
-              Bson updatedvalue = new Document("username",authDTO.password);
+          System.out.println(bodyString);
+          System.out.println(authDTO.username);
+          System.out.println(authDTO.password);
+
+          if(found != null) {
+              //Document userDocument = user.get(0);
+              Bson updatedvalue = new Document("password",authDTO.password);
               Bson updateopt = new Document("$set", updatedvalue);
-              userCollection.updateOne(userDocument, updateopt);
+              userCollection.updateOne(found, updateopt);
           }
           return "password changed";
       });
