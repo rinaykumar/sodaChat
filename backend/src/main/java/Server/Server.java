@@ -158,7 +158,7 @@ public class Server {
       }
 
     });
-*/
+
       post("/api/changeusername", (req, res) -> {
           //this one is quite strange to me, much to work on
           String bodyString = req.body();
@@ -166,13 +166,36 @@ public class Server {
           List<Document> user = userCollection.find(new Document("username", authDTO.username))
                   .into(new ArrayList<>());
 
+          System.out.println(bodyString);
+          System.out.println(authDTO.username);
+          System.out.println(authDTO.password);
+
           if(user.size() != 1) {
               Document userDocument = user.get(0);
-              Bson updatedvalue = new Document("username",authDTO.username);
+              Bson updatedvalue = new Document("username",authDTO.password);
               Bson updateopt = new Document("$set", updatedvalue);
               userCollection.updateOne(userDocument, updateopt);
           }
           return "OK";
+      });
+*/
+      post("/api/changeusername", (req, res) -> {
+          //this one is quite strange to me, much to work on
+          String bodyString = req.body();
+          AuthDTO authDTO = gson.fromJson(bodyString, AuthDTO.class);
+          Document found = userCollection.find(new Document("username",authDTO.username)).first();
+
+          System.out.println(bodyString);
+          System.out.println(authDTO.username);
+          System.out.println(authDTO.password);
+
+          if(found != null) {
+              //Document userDocument = user.get(0);
+              Bson updatedvalue = new Document("username",authDTO.password);
+              Bson updateopt = new Document("$set", updatedvalue);
+              userCollection.updateOne(found, updateopt);
+          }
+          return "username changed";
       });
 
       post("/api/changepassword", (req, res) -> {
@@ -188,7 +211,7 @@ public class Server {
               Bson updateopt = new Document("$set", updatedvalue);
               userCollection.updateOne(userDocument, updateopt);
           }
-          return "OK";
+          return "password changed";
       });
 
       post("/api/deleteUser", (req, res) -> {

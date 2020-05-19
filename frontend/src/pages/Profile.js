@@ -13,6 +13,7 @@ import "../css/profile.css";
 const Profile = ({ appUser, setAppUser }) => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [Newusername, setNewUsername] = React.useState("");
   const [error, setError] = React.useState("");
   const [usertype, setUserType] = React.useState("");
   const [profileNum, setProfileNum] = React.useState("");
@@ -36,6 +37,50 @@ const Profile = ({ appUser, setAppUser }) => {
       })
       .catch(() => {
         setError("Failed to delete");
+      });
+  };
+
+  const changeName = () => {
+    console.log(appUser);
+    console.log(Newusername);
+    const body = {
+      username: appUser,
+      password: Newusername,
+    };
+    axios.post('/api/changeusername', body)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.success) {
+          console.log("Worked!");
+          setAppUser(username);
+        } else {
+          setError(res.data.error);
+        }
+      })
+      .catch(() => {
+        setError("Failed to change");
+      });
+  };
+
+  const changepassword = () => {
+    console.log(appUser);
+    console.log(Newusername);
+    const body = {
+      username: appUser,
+      password: Newusername,
+    };
+    axios.post('/api/changeusername', body)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.success) {
+          console.log("Worked!");
+          setAppUser(username);
+        } else {
+          setError(res.data.error);
+        }
+      })
+      .catch(() => {
+        setError("Failed to change");
       });
   };
 
@@ -77,11 +122,20 @@ const Profile = ({ appUser, setAppUser }) => {
             <p class="centerText">Username:
                 <input className="username-input inputText" value={appUser} onChange={(e) => setUsername(e.target.value)} />
               </p>
-              <p class="centerText">Password:
+              <p class="centerText">NewUsername:
+                <input className="password-input inputText"  value={Newusername} onChange={(e) => setNewUsername(e.target.value)} />
+              </p>
+              <p class="centerText">NewPassword:
                 <input className="password-input inputText" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
               </p>
               <p class="centerText">
               <button class="fontRobotoMono" onClick={deleteUser}>delete user</button>
+              </p>
+              <p class="centerText">
+              <button class="fontRobotoMono" onClick={changeName}>change username</button>
+              </p>
+              <p class="centerText">
+              <button class="fontRobotoMono" onClick={changepassword}>change password</button>
               </p>
             </div>
           </div>
