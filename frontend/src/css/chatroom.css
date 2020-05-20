@@ -246,9 +246,10 @@ input:focus, textarea, button {
     justify-content: flex-start;
     align-items: center;
     overflow-y: scroll;
+    overflow-x: hidden;
     height: 70vh;
-    width: 90vw;
-    margin: 50px 0 0 0;
+    width: 70vw;
+    margin: 0 0 0 0;
     padding: 0;
   }
 

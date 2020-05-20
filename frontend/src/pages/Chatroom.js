@@ -8,6 +8,7 @@ import Profile3 from '../svg/profile3.png';
 import Profile4 from '../svg/profile4.png';
 import LikeBtn from '../svg/like-bttn.svg';
 import axios from 'axios';
+import $ from 'jquery';
 
 const ws = new WebSocket('ws://localhost:1234/ws');
 
@@ -149,6 +150,21 @@ const Chatroom = ({ appUser, setAppUser }) => {
         }
         return <Redirect to="/" />
     }
+
+    // jQuery for sidebar
+    $(document).ready(function () {
+        $('#dismiss, .overlay').on('click', function () {
+            $('#sidebar').removeClass('active');
+            $('.overlay').removeClass('active');
+        });
+
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').addClass('active');
+            $('.overlay').addClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        });
+    });
 
     React.useEffect(() => {
         fetchMessages();
