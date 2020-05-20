@@ -155,6 +155,25 @@ input:focus, textarea, button {
   color: #FFFFFF;
 }
 
+.user-counter{
+  width: 210px;
+  height: 30px;
+  margin-top: 20px;
+  margin-left: 25px;
+  border-radius: 5px;
+  background: white;
+  color: black;
+  font-size: 18px;
+  font-weight: 900;
+  border-style: none;
+
+/* 
+  padding: 5px;
+  background: black;
+  color: white;
+  margin-bottom: 50px; */
+}
+
 /* BOTTOM PORTION OF THE MENU */
 .bottom-buttons {
   order: 2;

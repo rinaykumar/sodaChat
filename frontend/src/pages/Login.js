@@ -6,12 +6,14 @@ import headerLogo from '../svg/chat-header.svg';
 // import sample chatroom video
 import video from '../videos/video.mp4';
 import "../css/login_signup.css";
+// import Chatroom from './Chatroom';
 
-const Login = ({ appUser, setAppUser }) => {
+const Login = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
   const [usertype, setUserType] = React.useState('');
+
 
   const handleLogIn = () => {
     console.log(username)
@@ -21,14 +23,14 @@ const Login = ({ appUser, setAppUser }) => {
       username: username,
       password: password,
     }
-
+    
     axios.post('/api/authenticate', body)
       .then((res) => {
         if (res.data.success || res.data.usertype) {
           console.log('Worked')
           setAppUser(username)
           setUserType(res.data.usertype)
-
+          // setTotalUsers(totalUsers + 1)
         }
         else {
           //auth error
@@ -41,6 +43,14 @@ const Login = ({ appUser, setAppUser }) => {
         setError('Failed to authenticate')
       })
   }
+
+React.useEffect(()=> {
+  if(appUser)
+  return setTotalUsers(totalUsers + 1)
+}, [])
+
+console.log(totalUsers)
+
 
   if (appUser) {
     return <Redirect to="/chatroom" />;

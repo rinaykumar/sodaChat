@@ -12,7 +12,10 @@ import $ from 'jquery';
 
 const ws = new WebSocket('ws://localhost:1234/ws');
 
-const Chatroom = ({ appUser, setAppUser }) => {
+const ws = new WebSocket('ws://localhost:1234/ws');
+
+const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
+    // const [totalUsers, setTotalUsers] = React.useState(0);
     const [message, setMessage] = React.useState('');
     const [messages, setMessages] = React.useState([]);
     const [profileNum, setProfileNum] = React.useState('');
@@ -71,7 +74,7 @@ const Chatroom = ({ appUser, setAppUser }) => {
     const profilePic = () => {
         axios.post('/api/profilePic', appUser)
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 setProfileNum(res.data);
             })
             .catch(console.log);
@@ -99,6 +102,7 @@ const Chatroom = ({ appUser, setAppUser }) => {
             user: appUser,
             likes: thumbsUp
         };
+        // ws.send(body.text);
         axios.post('/api/addMessage', body)
             .then(() => setMessage(''))
             .then(() => setThumbsUp(0))
@@ -106,11 +110,11 @@ const Chatroom = ({ appUser, setAppUser }) => {
             .catch(console.log);
     };
 
+
     const parseText = (message) => {
         let obj = JSON.parse(message);
         return obj.text;
     }
-
     const parseUser = (message) => {
         let obj = JSON.parse(message);
         return obj.user;
@@ -187,6 +191,9 @@ const Chatroom = ({ appUser, setAppUser }) => {
                         <div class="menu-profile-info">
                             <img id="user-profile-image" src={profilePic()} alt="" />
                             {appUser && <h5 id="username">{appUser}</h5>}
+                        </div>
+                        <div>
+                            <header class="user-counter"> Total Users LoggedIn: {totalUsers}</header>
                         </div>
                         <div class="bottom-buttons">
                             <Link to="/profile"><button class="menu-buttons" id="profile-bttn" type="button" name="profile">PROFILE</button></Link>

@@ -1,6 +1,6 @@
 package Server;
 
-import static spark.Spark.*;
+
 import DAO.MessagesDAO;
 import DTO.AddMessageDTO;
 import DTO.AuthDTO;
@@ -12,14 +12,16 @@ import com.google.gson.Gson;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import static com.mongodb.client.model.Filters.*;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import static com.mongodb.client.model.Filters.eq;
+import static spark.Spark.*;
+
 
 public class Server {
   private static List<String> items = new ArrayList<>();
@@ -31,6 +33,7 @@ public class Server {
     MongoDatabase db = mongoClient.getDatabase("FinalDatabase");
     // Get ref to collection
     MongoCollection<Document> messageCollection = db.getCollection("Messages");
+
     MongoCollection<Document> userCollection = db.getCollection("Users");
 
     // Check if initial user is in database, if not then add
@@ -43,10 +46,10 @@ public class Server {
         .append ("password", "password")
         .append("profilePic", 1);
 
-      userCollection.insertOne(newUser);
-    }
+          userCollection.insertOne(newUser);
+      }
 
-    // Init Gson
+      // Init Gson
     Gson gson = new Gson();
 
     port(1234);
@@ -88,8 +91,8 @@ public class Server {
         return gson.toJson(authResponseDTO);
       }
 
-      Random rand = new Random();
-      int profilePicNum = rand.nextInt(4);
+        Random rand = new Random();
+        int profilePicNum = rand.nextInt(4);
 
       Document newUser = new Document()
         .append("username", authDTO.username)
@@ -119,6 +122,7 @@ public class Server {
       assert userToFind != null;
       return userToFind.get("profilePic").toString();
     });
+
 
     get("/api/getAllMessages", (req, res) -> {
       MessagesDAO messagesDAO = MessagesDAO.getInstance();
