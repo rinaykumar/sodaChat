@@ -6,6 +6,7 @@ public class AddMessageDTO {
   public final String text;
   public final String user;
   public final Date date;
+
   public final int thumbsUp;
   public final String picNum;
 

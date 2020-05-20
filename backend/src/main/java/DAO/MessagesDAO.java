@@ -30,6 +30,7 @@ public class MessagesDAO {
   MongoClient mongoClient = new MongoClient("localhost", 27017);
 
   public void addMessage(String text, String user, int thumbsUp) {
+
     // Connect to mongo
     MongoDatabase db = mongoClient.getDatabase("FinalDatabase");
     MongoCollection<Document> MessagesCollection = db.getCollection("Messages");
@@ -41,6 +42,7 @@ public class MessagesDAO {
 
     // Create new DTO and convert to JSON
     Date date = new Date();
+
     AddMessageDTO newMessageDTO = new AddMessageDTO(text, user, thumbsUp, date, picNum);
     String messageJSON = gson.toJson(newMessageDTO);
 
@@ -61,24 +63,6 @@ public class MessagesDAO {
     int likeNum = (Integer) messageToFind.get("thumbsUp"); //converts object to int
 
   }
-
-    /*
-    public void deleteItem(String item, double price) {
-        // Connect to mongo
-        MongoDatabase db = mongoClient.getDatabase("HW3Database");
-        MongoCollection<Document> MessagesCollection = db.getCollection("Messages");
-
-        // Create new DTO and convert to JSON
-        AddItemDTO newItemDTO = new AddItemDTO(item, price);
-        String itemJSON = gson.toJson(newItemDTO);
-
-        // Create new mongo Document from JSON
-        Document newItem = Document.parse(itemJSON);
-
-        // Delete Document from Collections
-        MessagesCollection.findOneAndDelete(newItem);
-    }
-    */
 
   public MessagesListDTO getAllMessages() {
     MongoDatabase db = mongoClient.getDatabase("FinalDatabase");

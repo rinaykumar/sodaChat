@@ -50,14 +50,14 @@ const Login = ({ appUser, setAppUser }) => {
 
     <div className="background">
       <video id='sampleVideo' autoPlay loop muted>
-            <source src={video} type='video/mp4' />
+        <source src={video} type='video/mp4' />
       </video>
       <div className="flexContainerRow">
         {/* ======== Sign In Box - [LEFT] ======== */}
         <div className="flexBox-1">
           {/* <img id="headerLogo" src={headerLogo} alt="Logo" /> */}
-          <br/>
-          <br/>
+          <br />
+          <br />
           <div id="signInBox" className="AccountBox centerBoxH flexContainerCol fontRobotoMono">
             {/* Nav in the top-right */}
             {/* <div className="flexBox-1">
@@ -73,7 +73,7 @@ const Login = ({ appUser, setAppUser }) => {
               <div id="error">
                 {error && <strong>{error}</strong>}
               </div>
-              <br/>
+              <br />
               {/* Start of Login Form (requires Username & Password) */}
               <p class="centerText">Username:
                 <input className="username-input inputText" value={username} onChange={(e) => setUsername(e.target.value)} />
@@ -84,7 +84,7 @@ const Login = ({ appUser, setAppUser }) => {
               {/* <p id="resetPsswd" class="smallFontSz"><a class="links" href="#">Forgot Password?</a>
               </p> */}
               <button id="submitBttn" class="fontRobotoMono" disabled={!username || !password} onClick={handleLogIn}>Log in</button>
-              <br/>   
+              <br />
               <p id="AccountBttn" class="smallFontSz"><Link className="links" to="/signup">Sign Up</Link></p>
             </div>
           </div>

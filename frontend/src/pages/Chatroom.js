@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import '../css/chatroom.css';
 import Selfie from '../svg/selfie.jpg';
 import Profile1 from '../svg/profile1.png';
@@ -189,8 +189,8 @@ const Chatroom = ({ appUser, setAppUser }) => {
                             {appUser && <h5 id="username">{appUser}</h5>}
                         </div>
                         <div class="bottom-buttons">
-                            <button class="menu-buttons" id="profile-bttn" type="button" name="profile">PROFILE</button>
-                            <button class="menu-buttons" id="logout-bttn" type="button" name="logout" onClick={logoutUser}>LOGOUT</button>
+                            <Link to="/profile"><button class="menu-buttons" id="profile-bttn" type="button" name="profile">PROFILE</button></Link>
+                            <button class="menu-buttons" id="logout-bttn" type="button" name="logout">LOGOUT</button>
                         </div>
                     </div>
                 </div>
