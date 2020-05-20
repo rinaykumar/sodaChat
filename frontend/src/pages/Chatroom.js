@@ -12,8 +12,6 @@ import $ from 'jquery';
 
 const ws = new WebSocket('ws://localhost:1234/ws');
 
-const ws = new WebSocket('ws://localhost:1234/ws');
-
 const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
     // const [totalUsers, setTotalUsers] = React.useState(0);
     const [message, setMessage] = React.useState('');
