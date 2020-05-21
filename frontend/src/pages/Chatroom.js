@@ -18,12 +18,27 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
     const [messages, setMessages] = React.useState([]);
     const [profileNum, setProfileNum] = React.useState('');
     const [thumbsUp, setThumbsUp] = React.useState('');
+    const [lists, setLists] = React.useState([]);
+
+
+    // React.useEffect(()=> {
+    //     if(appUser!==null)
+    //     lists.push(appUser)
+    //      setLists([...lists, appUser])
+    //      setTotalUsers(lists.length)
+    //       console.log(lists)
+
+    // }, [])
+
 
     const fetchMessages = () => {
         axios.get('/api/getAllMessages')
             .then((res) => {
                 console.log(res);
                 setMessages(res.data.messages);
+                console.log(messages)
+                // const newMessage = res.data.messages
+                // addMessage(newMessage)
             })
             .catch(console.log);
     };
@@ -51,21 +66,25 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
         );
     }
 
-    const addMessage = (stringMessage) => {
-        console.log(stringMessage.data); // incoming from server
-        setMessages((messages) => {
-            const newMessages = messages.slice(); // copy from item 0
-            newMessages.push(stringMessage.data);
-            console.log(newMessages);
-            return newMessages;
-        });
-    };
+    // const addMessage = (stringMessage) => {
+    //     console.log(stringMessage); // incoming from server
+    //     lists.push(stringMessage)
+    //     setLists([...lists])
+    //     // setLists((lists) => {
+    //     //     const newLists = lists.slice(); // copy from item 0
+    //     //     newLists.push(stringMessage);
+    //     //     console.log(newLists);
+    //     //      return newLists;
+    //     // });
+    // };
 
+
+    ///// changed fetchMessages to messages in the listener
     React.useEffect(() => {
         console.log('Got the message');
         // do something when component mounts
-        ws.addEventListener('message', addMessage);
-        return () => ws.removeEventListener('message', addMessage);
+        ws.addEventListener('message', messages);
+        return () => ws.removeEventListener('message', messages);
     }, []);
 
     // This grabs the current user's profile pic number for the sidebar
@@ -195,7 +214,7 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
                         </div>
                         <div class="bottom-buttons">
                             <Link to="/profile"><button class="menu-buttons" id="profile-bttn" type="button" name="profile">PROFILE</button></Link>
-                            <button class="menu-buttons" id="logout-bttn" type="button" name="logout">LOGOUT</button>
+                            <button class="menu-buttons" id="logout-bttn" type="button" name="logout"onClick={logoutUser}>LOGOUT</button>
                         </div>
                     </div>
                 </div>

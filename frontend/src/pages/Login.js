@@ -13,7 +13,7 @@ const Login = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
   const [usertype, setUserType] = React.useState('');
-
+  const [lists, setLists] = React.useState([''])
 
   const handleLogIn = () => {
     console.log(username)
@@ -29,6 +29,7 @@ const Login = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
         if (res.data.success || res.data.usertype) {
           console.log('Worked')
           setAppUser(username)
+          addUser(username)
           setUserType(res.data.usertype)
           // setTotalUsers(totalUsers + 1)
         }
@@ -44,12 +45,32 @@ const Login = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
       })
   }
 
-React.useEffect(()=> {
-  if(appUser)
-  return setTotalUsers(totalUsers + 1)
+const addUser = (user) => {
+  const newUser = user
+  lists.
+  if(newUser!==null && newUser)
+  lists.push(newUser)
+  setLists([...lists, newUser])
+  setTotalUsers(lists.length)
+   console.log(lists)
+}
+
+  React.useEffect(()=> {
+    if(appUser!==null)
+    lists.push(appUser)
+     setLists([...lists, appUser])
+     setTotalUsers(lists.length)
+      console.log(lists)
+
 }, [])
 
-console.log(totalUsers)
+
+// React.useEffect(()=> {
+//   if(appUser)
+//   return setTotalUsers(totalUsers + 1)
+// }, [])
+
+// console.log(totalUsers)
 
 
   if (appUser) {
