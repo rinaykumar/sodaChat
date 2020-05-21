@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from "react";
 import { Redirect, Link } from 'react-router-dom';
 import '../css/chatroom.css';
 import Selfie from '../svg/selfie.jpg';
@@ -8,14 +8,16 @@ import Profile3 from '../svg/profile3.png';
 import Profile4 from '../svg/profile4.png';
 import LikeBtn from '../svg/like-bttn.svg';
 import axios from 'axios';
-
+import $ from 'jquery';
 
 const ws = new WebSocket('ws://localhost:1234/ws');
 
-const Chatroom = ({ appUser, setAppUser }) => {
+const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
+    // const [totalUsers, setTotalUsers] = React.useState(0);
     const [message, setMessage] = React.useState('');
     const [messages, setMessages] = React.useState([]);
     const [profileNum, setProfileNum] = React.useState('');
+    const [thumbsUp, setThumbsUp] = React.useState('');
 
     const fetchMessages = () => {
         axios.get('/api/getAllMessages')
@@ -26,10 +28,22 @@ const Chatroom = ({ appUser, setAppUser }) => {
             .catch(console.log);
     };
 
+
+    const likeMessage = () => {
+        let currentLikes = parseLikes(message) + 1;
+        const body = {
+            likes: currentLikes
+        };
+        axios.post('/api/updateLikes', body)
+            .then(() => setThumbsUp(currentLikes))
+            .catch(console.log);
+
+    }
+
     const ScrollMessages = ({ messages }) => {
         const lastMessageRef = React.useRef(null);
         const scrolltoBottom = () => {
-            lastMessageRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start', duration: 10000});
+            lastMessageRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start', duration: 10000 });
         }
         React.useEffect(scrolltoBottom, [messages]);
         return (
@@ -48,7 +62,7 @@ const Chatroom = ({ appUser, setAppUser }) => {
     };
 
     React.useEffect(() => {
-        console.log('Got the mesage');
+        console.log('Got the message');
         // do something when component mounts
         ws.addEventListener('message', addMessage);
         return () => ws.removeEventListener('message', addMessage);
@@ -58,7 +72,7 @@ const Chatroom = ({ appUser, setAppUser }) => {
     const profilePic = () => {
         axios.post('/api/profilePic', appUser)
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 setProfileNum(res.data);
             })
             .catch(console.log);
@@ -83,22 +97,30 @@ const Chatroom = ({ appUser, setAppUser }) => {
         setMessage('')
         const body = {
             text: message,
-            user: appUser
+            user: appUser,
+            likes: thumbsUp
         };
+        // ws.send(body.text);
         axios.post('/api/addMessage', body)
             .then(() => setMessage(''))
+            .then(() => setThumbsUp(0))
             .then(() => fetchMessages())
             .catch(console.log);
     };
+
 
     const parseText = (message) => {
         let obj = JSON.parse(message);
         return obj.text;
     }
-
     const parseUser = (message) => {
         let obj = JSON.parse(message);
         return obj.user;
+    }
+
+    const parseLikes = (message) => {
+        let obj = JSON.parse(message);
+        return obj.thumbsUp;
     }
 
     const parseDate = (message) => {
@@ -123,6 +145,29 @@ const Chatroom = ({ appUser, setAppUser }) => {
         }
     }
 
+    const logoutUser = () => {
+        if (appUser) {
+            setAppUser(null)
+            //setTotalUsers(totalUsers - 1)
+        }
+        return <Redirect to="/" />
+    }
+
+    // jQuery for sidebar
+    $(document).ready(function () {
+        $('#dismiss, .overlay').on('click', function () {
+            $('#sidebar').removeClass('active');
+            $('.overlay').removeClass('active');
+        });
+
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').addClass('active');
+            $('.overlay').addClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        });
+    });
+
     React.useEffect(() => {
         fetchMessages();
 
@@ -135,6 +180,7 @@ const Chatroom = ({ appUser, setAppUser }) => {
     return (
         <div>
             <div class="flexbox">
+                {/* Sidebar */}
                 <div id="sidebar">
                     <div id="dismiss">
                         <i class="fas fa-arrow-left"></i>
@@ -144,10 +190,11 @@ const Chatroom = ({ appUser, setAppUser }) => {
                             <img id="user-profile-image" src={profilePic()} alt="" />
                             {appUser && <h5 id="username">{appUser}</h5>}
                         </div>
+                        <div>
+                            <header class="user-counter"> Total Users LoggedIn: {totalUsers}</header>
+                        </div>
                         <div class="bottom-buttons">
-                            
                             <Link to="/profile"><button class="menu-buttons" id="profile-bttn" type="button" name="profile">PROFILE</button></Link>
-                                
                             <button class="menu-buttons" id="logout-bttn" type="button" name="logout">LOGOUT</button>
                         </div>
                     </div>
@@ -193,9 +240,9 @@ const Chatroom = ({ appUser, setAppUser }) => {
                                             </div>
                                             <div class="message-content-text">
                                                 <p>{parseText(message)}</p>
-                                                <button id="like-button" type="button" name="like-button">
+                                                <button id="like-button" type="button" name="like-button" onClick={likeMessage}>
                                                     <img id="thumbs-up" src={LikeBtn} alt="" />
-                                                    <p id="thumbs-up-count">0</p>
+                                                    <p id="thumbs-up-count">{parseLikes(message)}</p>
                                                 </button>
                                             </div>
                                         </div>

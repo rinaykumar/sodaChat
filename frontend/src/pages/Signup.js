@@ -45,8 +45,8 @@ const Signup = ({ appUser, setAppUser }) => {
         {/* ======== Sign Up Box - [LEFT] ======== */}
         <div className="flexBox-1">
           {/* <img id="headerLogo" src={headerLogo} alt="Logo" /> */}
-          <br/>
-          <br/>
+          <br />
+          <br />
           <div id="signUpBox" className="AccountBox centerBoxH flexContainerCol fontRobotoMono">
             {/* Nav in the top-right */}
             {/* <div className="flexBox-1">
@@ -57,13 +57,13 @@ const Signup = ({ appUser, setAppUser }) => {
             {/* sign in contents */}
             <div className="flexBox-2">
               {/* Header */}
-              <h1 id="header-signIn-signup" class="centerText"><em>soda</em></h1>
+              <h1 id="header-signIn-signup" class="centerText"><em>sodaChat</em></h1>
               {/* error message */}
               <div id="error">
                 {error && <strong>{error}</strong>}
               </div>
               {/* Start of Login Form (requires Username & Password) */}
-            
+
               <p className="usernameText">Username:
                 <input className="username-input inputText" value={username} onChange={(e) => setUsername(e.target.value)} required="required" />
               </p>
@@ -78,13 +78,13 @@ const Signup = ({ appUser, setAppUser }) => {
               </p>
               <button id="submitBttn" class="fontRobotoMono" disabled={!username || !password} onClick={handleAuth}>Sign up</button>
               <div>
-              <p id="AccountBttn" className="smallFontSz"><Link className="links" to="/">Log In</Link></p>
+                <p id="AccountBttn" className="smallFontSz"><Link className="links" to="/">Log In</Link></p>
               </div>
             </div>
           </div>
         </div>
         {/* ======== Sample Chatroom Video - [RIGHT] ======== */}
-        
+
       </div>
     </div>
   );
