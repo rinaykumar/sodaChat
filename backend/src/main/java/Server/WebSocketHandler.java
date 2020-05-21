@@ -27,17 +27,6 @@ public class WebSocketHandler {
         });
     }
 
-  public static void broadcast(String message){
-    sessionMap.keySet().forEach(session -> {
-      // loop over sessions
-      try{
-        session.getRemote().sendString(message); // send same message to all
-      }catch (Exception e){
-        e.printStackTrace();
-      }
-    });
-  }
-
   @OnWebSocketConnect
   public void connected(Session session) throws IOException {
     System.out.println("A client has connected");
