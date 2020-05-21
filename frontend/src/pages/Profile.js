@@ -108,6 +108,13 @@ const Profile  = ({ appUser, setAppUser }) => {
     }
   }
 
+  const logout = () => {
+    if(appUser){
+      setAppUser(null)
+      setRedirect(true);
+     }
+  }
+
   const profilePic = () => {
     axios.post('/api/profilePic', appUser)
         .then((res) => {
@@ -136,8 +143,8 @@ const Profile  = ({ appUser, setAppUser }) => {
           <br />
           <br />
           <div
-            id="signInBox"
-            className="AccountBox centerBoxH flexContainerCol fontRobotoMono"
+            // id="signInBox"
+            // className="AccountBox centerBoxH flexContainerCol fontRobotoMono"
           >
             <div className="flexBox-2">
             <img id="user-profile-image" src={profilePic()} alt="" />
@@ -160,6 +167,9 @@ const Profile  = ({ appUser, setAppUser }) => {
               </p>
               <p class="centerText">
               <button class="fontRobotoMono" onClick={changepassword}>Change Password</button>
+              </p>
+              <p class="centerText">
+              <button class="fontRobotoMono" onClick={logout}>Logout</button>
               </p>
             </div>
           </div>

@@ -8,4 +8,47 @@ body {
     overflow: hidden;
   }
 
+  .flexBox-2 {
+    flex: 1;
+    order: 2;
+    align-items: flex-start;
+  }
+
+  /*Centers text in the middle*/
+.centerText {
+  text-align: center;
+  color: #ffffff;
+}
+
+.inputText {
+  border-radius: 2px;
+  width: 200px;
+  border-style: none;
+  line-height: 20px;
+  padding-left: 5px;
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+@media (max-width: 1049px) {
+  /* Wider than desktop */
+  .flexContainerRow {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 75px;
+  }
+}
+
+@media (min-width: 1050px) {
+  /* Wider than desktop */
+  .flexContainerRow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 75px;
+  }
+}
   
