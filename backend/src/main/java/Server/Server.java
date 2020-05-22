@@ -116,6 +116,19 @@ public class Server {
       return "OK";
     });
 
+      post("/api/updateLikes", (req, res) -> {
+
+          String bodyString = req.body();
+
+          AddMessageDTO messageDTO = gson.fromJson(bodyString,
+                  AddMessageDTO.class);
+          // Add it to the list
+          MessagesDAO messagesDAO = MessagesDAO.getInstance();
+          messagesDAO.updateLikes(messageDTO.text, messageDTO.thumbsUp);
+          System.out.println(bodyString);
+          return "OK";
+      });
+
     post("/api/profilePic", (req, res) -> {
       String bodyString = req.body();
       Document userToFind = userCollection.find(eq("username", bodyString)).first();

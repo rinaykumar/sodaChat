@@ -30,9 +30,13 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
 
 
     const likeMessage = () => {
-        let currentLikes = parseLikes(message) + 1;
+       // let currentLikes = parseLikes(message) + 1;
+       console.log("THIS IS MESSAGE" + message);
+       let currentLikes = 2;
+        console.log("THIS IS CURRENT LIKES: " + currentLikes);
         const body = {
-            likes: currentLikes
+            text: "sup foo",
+            thumbsUp: currentLikes
         };
         axios.post('/api/updateLikes', body)
             .then(() => setThumbsUp(currentLikes))
