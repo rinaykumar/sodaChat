@@ -43,33 +43,33 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
             .catch(console.log)
     }
 
-    const ScrollMessages = ({ messages }) => {
-        const lastMessageRef = React.useRef(null);
-        const scrolltoBottom = () => {
-            lastMessageRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start', duration: 10000 });
-        }
-        React.useEffect(scrolltoBottom, [messages]);
-        return (
-            <div ref={lastMessageRef} />
-        );
-    }
+    // const ScrollMessages = ({ messages }) => {
+    //     const lastMessageRef = React.useRef(null);
+    //     const scrolltoBottom = () => {
+    //         lastMessageRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start', duration: 10000 });
+    //     }
+    //     React.useEffect(scrolltoBottom, [messages]);
+    //     return (
+    //         <div ref={lastMessageRef} />
+    //     );
+    // }
 
-    const addMessage = (stringMessage) => {
-        console.log(stringMessage.data); // incoming from server
-        setMessages((messages) => {
-            const newMessages = messages.slice(); // copy from item 0
-            newMessages.push(stringMessage.data);
-            console.log(newMessages);
-            return newMessages;
-        });
-    };
+    // const addMessage = (stringMessage) => {
+    //     console.log(stringMessage.data); // incoming from server
+    //     setMessages((messages) => {
+    //         const newMessages = messages.slice(); // copy from item 0
+    //         newMessages.push(stringMessage.data);
+    //         console.log(newMessages);
+    //         return newMessages;
+    //     });
+    // };
 
-    React.useEffect(() => {
-        console.log('Got the message');
-        // do something when component mounts
-        ws.addEventListener('message', addMessage);
-        return () => ws.removeEventListener('message', addMessage);
-    }, []);
+    // React.useEffect(() => {
+    //     console.log('Got the message');
+    //     // do something when component mounts
+    //     ws.addEventListener('message', addMessage);
+    //     return () => ws.removeEventListener('message', addMessage);
+    // }, []);
 
     // This grabs the current user's profile pic number for the sidebar
     const profilePic = () => {
@@ -174,7 +174,7 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
     React.useEffect(() => {
         fetchMessages();
 
-    }, []);
+    });
 
     if (!appUser) {
         return <Redirect to="/" />;
@@ -192,9 +192,6 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
                         <div class="menu-profile-info">
                             <img id="user-profile-image" src={profilePic()} alt="" />
                             {appUser && <h5 id="username">{appUser}</h5>}
-                        </div>
-                        <div>
-                            <header class="user-counter"> Total Users LoggedIn: {totalUsers}</header>
                         </div>
                         <div class="bottom-buttons">
                             <Link to="/profile"><button class="menu-buttons" id="profile-bttn" type="button" name="profile">PROFILE</button></Link>
@@ -249,7 +246,7 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
                                                 </button>
                                             </div>
                                         </div>
-                                        <ScrollMessages messages={messages} />
+                                        {/* <ScrollMessages messages={messages} /> */}
                                     </div>
                                 );
                             })}
