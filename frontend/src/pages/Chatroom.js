@@ -17,7 +17,6 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
     const [messages, setMessages] = React.useState([]);
     const [profileNum, setProfileNum] = React.useState('');
     const [thumbsUp, setThumbsUp] = React.useState('');
-    const [lists, setLists] = React.useState([]);
 
     const fetchMessages = () => {
         axios.get('/api/getAllMessages')
@@ -65,14 +64,6 @@ console.log(newMessages)
     // ws.addEventListener('message', addMessage);
     // return () => ws.removeEventListener('message', addMessage);
 }, []);
-
-    ///// changed fetchMessages to messages in the listener
-    // React.useEffect(() => {
-    //     console.log('Got the message');
-    //     // do something when component mounts
-    //     ws.addEventListener('message', addMessage);
-    //     return () => ws.removeEventListener('message', addMessage);
-    // }, []);
 
     // This grabs the current user's profile pic number for the sidebar
     const profilePic = () => {

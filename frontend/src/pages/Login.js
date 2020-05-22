@@ -47,22 +47,12 @@ const Login = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
 
 const addUser = (user) => {
   const newUser = user
-  lists.
-  if(newUser!==null && newUser)
+  if(newUser!==null)
   lists.push(newUser)
   setLists([...lists, newUser])
   setTotalUsers(lists.length)
    console.log(lists)
 }
-
-  React.useEffect(()=> {
-    if(appUser!==null)
-    lists.push(appUser)
-     setLists([...lists, appUser])
-     setTotalUsers(lists.length)
-      console.log(lists)
-
-}, [])
 
   if (appUser) {
     return <Redirect to="/chatroom" />;
