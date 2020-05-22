@@ -29,19 +29,18 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
     };
 
 
-    const likeMessage = () => {
-       // let currentLikes = parseLikes(message) + 1;
-       console.log("THIS IS MESSAGE" + message);
-       let currentLikes = 2;
-        console.log("THIS IS CURRENT LIKES: " + currentLikes);
+    const likeMessage = (message) => {
+        // let currentLikes = parseLikes(message) + 1;
+        let currentLikes = parseLikes(message) + 1;
+        console.log(parseText(message) + "was just liked. Likes are now " + parseLikes(message))
         const body = {
-            text: "sup foo", //this needs to change to actual message
+            text: parseText(message), //this needs to change to actual message
             thumbsUp: currentLikes
         };
         axios.post('/api/updateLikes', body)
             .then(() => setThumbsUp(currentLikes))
-            .catch(console.log);
-
+            .then(() => fetchMessages())
+            .catch(console.log)
     }
 
     const ScrollMessages = ({ messages }) => {
@@ -199,7 +198,7 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
                         </div>
                         <div class="bottom-buttons">
                             <Link to="/profile"><button class="menu-buttons" id="profile-bttn" type="button" name="profile">PROFILE</button></Link>
-                            <button class="menu-buttons" id="logout-bttn" type="button" name="logout">LOGOUT</button>
+                            <button class="menu-buttons" id="logout-bttn" type="button" name="logout" onClick={logoutUser}>LOGOUT</button>
                         </div>
                     </div>
                 </div>
@@ -244,7 +243,7 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
                                             </div>
                                             <div class="message-content-text">
                                                 <p>{parseText(message)}</p>
-                                                <button id="like-button" type="button" name="like-button" onClick={likeMessage}>
+                                                <button id="like-button" type="button" name="like-button" onClick={() => likeMessage(message)}>
                                                     <img id="thumbs-up" src={LikeBtn} alt="" />
                                                     <p id="thumbs-up-count">{parseLikes(message)}</p>
                                                 </button>
