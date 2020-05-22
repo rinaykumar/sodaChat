@@ -35,7 +35,7 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
        let currentLikes = 2;
         console.log("THIS IS CURRENT LIKES: " + currentLikes);
         const body = {
-            text: "sup foo",
+            text: "sup foo", //this needs to change to actual message
             thumbsUp: currentLikes
         };
         axios.post('/api/updateLikes', body)
