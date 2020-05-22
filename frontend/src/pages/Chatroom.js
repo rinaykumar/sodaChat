@@ -193,9 +193,9 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
                             <img id="user-profile-image" src={profilePic()} alt="" />
                             {appUser && <h5 id="username">{appUser}</h5>}
                         </div>
-                        <div>
+                        {/* <div>
                             <header class="user-counter"> Total Users LoggedIn: {totalUsers}</header>
-                        </div>
+                        </div> */}
                         <div class="bottom-buttons">
                             <Link to="/profile"><button class="menu-buttons" id="profile-bttn" type="button" name="profile">PROFILE</button></Link>
                             <button class="menu-buttons" id="logout-bttn" type="button" name="logout" onClick={logoutUser}>LOGOUT</button>
