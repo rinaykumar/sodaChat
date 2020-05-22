@@ -64,15 +64,6 @@ const addUser = (user) => {
 
 }, [])
 
-
-// React.useEffect(()=> {
-//   if(appUser)
-//   return setTotalUsers(totalUsers + 1)
-// }, [])
-
-// console.log(totalUsers)
-
-
   if (appUser) {
     return <Redirect to="/chatroom" />;
   }

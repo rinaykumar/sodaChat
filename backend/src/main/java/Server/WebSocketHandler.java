@@ -1,5 +1,6 @@
 package Server;
 
+import com.google.gson.Gson;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
@@ -14,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class WebSocketHandler {
   // Store sessions if you want to, for example, broadcast a message to all users
   static Map<Session, Session> sessionMap = new ConcurrentHashMap<>();
-    int userCount = 0;
+Gson gson = new Gson();
 
     public static void broadcast(String message){
         sessionMap.keySet().forEach(session -> {
@@ -27,22 +28,9 @@ public class WebSocketHandler {
         });
     }
 
-  public static void broadcast(String message){
-    sessionMap.keySet().forEach(session -> {
-      // loop over sessions
-      try{
-        session.getRemote().sendString(message); // send same message to all
-      }catch (Exception e){
-        e.printStackTrace();
-      }
-    });
-  }
-
   @OnWebSocketConnect
   public void connected(Session session) throws IOException {
     System.out.println("A client has connected");
-    userCount++;
-      System.out.println(userCount);
     sessionMap.put(session, session);
   }
 
@@ -55,6 +43,7 @@ public class WebSocketHandler {
   @OnWebSocketMessage
   public void message(Session session, String message) throws IOException {
     System.out.println("Got: " + message);   // Print message
+      broadcast(message);
   }
 
 }

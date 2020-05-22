@@ -123,7 +123,6 @@ public class Server {
       return userToFind.get("profilePic").toString();
     });
 
-
     get("/api/getAllMessages", (req, res) -> {
       MessagesDAO messagesDAO = MessagesDAO.getInstance();
       MessagesListDTO list = messagesDAO.getAllMessages();

@@ -13,32 +13,18 @@ import $ from 'jquery';
 const ws = new WebSocket('ws://localhost:1234/ws');
 
 const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
-    // const [totalUsers, setTotalUsers] = React.useState(0);
     const [message, setMessage] = React.useState('');
     const [messages, setMessages] = React.useState([]);
     const [profileNum, setProfileNum] = React.useState('');
     const [thumbsUp, setThumbsUp] = React.useState('');
     const [lists, setLists] = React.useState([]);
 
-
-    // React.useEffect(()=> {
-    //     if(appUser!==null)
-    //     lists.push(appUser)
-    //      setLists([...lists, appUser])
-    //      setTotalUsers(lists.length)
-    //       console.log(lists)
-
-    // }, [])
-
-
     const fetchMessages = () => {
         axios.get('/api/getAllMessages')
             .then((res) => {
                 console.log(res);
                 setMessages(res.data.messages);
-                console.log(messages)
-                // const newMessage = res.data.messages
-                // addMessage(newMessage)
+                ws.send(res.data.messages)
             })
             .catch(console.log);
     };
@@ -66,26 +52,27 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
         );
     }
 
-    // const addMessage = (stringMessage) => {
-    //     console.log(stringMessage); // incoming from server
-    //     lists.push(stringMessage)
-    //     setLists([...lists])
-    //     // setLists((lists) => {
-    //     //     const newLists = lists.slice(); // copy from item 0
-    //     //     newLists.push(stringMessage);
-    //     //     console.log(newLists);
-    //     //      return newLists;
-    //     // });
-    // };
-
+   React.useEffect(() => {
+    console.log('Got the message');
+    ws.onmessage = (stringMessage)=>{
+console.log(stringMessage.data)
+const newMessages = messages.slice(0);
+newMessages.push(stringMessage.data)
+console.log(newMessages)
+// setMessages([...newMessages])
+    }
+    // do something when component mounts
+    // ws.addEventListener('message', addMessage);
+    // return () => ws.removeEventListener('message', addMessage);
+}, []);
 
     ///// changed fetchMessages to messages in the listener
-    React.useEffect(() => {
-        console.log('Got the message');
-        // do something when component mounts
-        ws.addEventListener('message', messages);
-        return () => ws.removeEventListener('message', messages);
-    }, []);
+    // React.useEffect(() => {
+    //     console.log('Got the message');
+    //     // do something when component mounts
+    //     ws.addEventListener('message', addMessage);
+    //     return () => ws.removeEventListener('message', addMessage);
+    // }, []);
 
     // This grabs the current user's profile pic number for the sidebar
     const profilePic = () => {
@@ -112,8 +99,8 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
         console.log("From submitMessage");
         console.log(message);
         console.log(appUser);
-        ws.send(message);
-        setMessage('')
+        // ws.send(message);
+        // setMessage('')
         const body = {
             text: message,
             user: appUser,
@@ -167,7 +154,7 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
     const logoutUser = () => {
         if (appUser) {
             setAppUser(null)
-            //setTotalUsers(totalUsers - 1)
+            setTotalUsers(totalUsers - 1)
         }
         return <Redirect to="/" />
     }
