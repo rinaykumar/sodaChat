@@ -134,8 +134,6 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
     // This sets the profile pic for loaded messages and new messages
     const parsePic = (message) => {
         let obj = JSON.parse(message);
-        console.log("picNum:")
-        console.log(obj.picNum)
         switch (obj.picNum) {
             case "0":
                 return Profile1
