@@ -1,4 +1,4 @@
-import React from 'react';
+git simport React from 'react';
 import './css/App.css';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Chatroom from './pages/Chatroom';
@@ -19,20 +19,17 @@ const App = () => {
     <div>
       <BrowserRouter>
         <Switch>
-        <Route path="/login">
-            <Login appUser={appUser} setAppUser={setAppUser} totalUsers={totalUsers} setTotalUsers={setTotalUsers}/>
-          </Route>
           <Route path="/profile">
             <Profile appUser={appUser} setAppUser={setAppUser} />
           </Route>
           <Route path="/chatroom">
-            <Chatroom appUser={appUser} setAppUser={setAppUser} totalUsers={totalUsers} setTotalUsers={setTotalUsers}/>
+            <Chatroom appUser={appUser} setAppUser={setAppUser} totalUsers={totalUsers} setTotalUsers={setTotalUsers} />
           </Route>
           <Route path="/signup">
             <Signup appUser={appUser} setAppUser={setAppUser} />
           </Route>
           <Route path="/">
-            <Login appUser={appUser} setAppUser={setAppUser} totalUsers={totalUsers} setTotalUsers={setTotalUsers}/>
+            <Login appUser={appUser} setAppUser={setAppUser} totalUsers={totalUsers} setTotalUsers={setTotalUsers} />
           </Route>
         </Switch>
       </BrowserRouter>

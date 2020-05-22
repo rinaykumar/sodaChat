@@ -29,44 +29,47 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
     };
 
 
-    const likeMessage = () => {
+    const likeMessage = (message) => {
+        // let currentLikes = parseLikes(message) + 1;
         let currentLikes = parseLikes(message) + 1;
+        console.log(parseText(message) + "was just liked. Likes are now " + parseLikes(message))
         const body = {
-            likes: currentLikes
+            text: parseText(message), //this needs to change to actual message
+            thumbsUp: currentLikes
         };
         axios.post('/api/updateLikes', body)
             .then(() => setThumbsUp(currentLikes))
-            .catch(console.log);
-
+            .then(() => fetchMessages())
+            .catch(console.log)
     }
 
-    const ScrollMessages = ({ messages }) => {
-        const lastMessageRef = React.useRef(null);
-        const scrolltoBottom = () => {
-            lastMessageRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start', duration: 10000 });
-        }
-        React.useEffect(scrolltoBottom, [messages]);
-        return (
-            <div ref={lastMessageRef} />
-        );
-    }
+    // const ScrollMessages = ({ messages }) => {
+    //     const lastMessageRef = React.useRef(null);
+    //     const scrolltoBottom = () => {
+    //         lastMessageRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start', duration: 10000 });
+    //     }
+    //     React.useEffect(scrolltoBottom, [messages]);
+    //     return (
+    //         <div ref={lastMessageRef} />
+    //     );
+    // }
 
-    const addMessage = (stringMessage) => {
-        console.log(stringMessage.data); // incoming from server
-        setMessages((messages) => {
-            const newMessages = messages.slice(); // copy from item 0
-            newMessages.push(stringMessage.data);
-            console.log(newMessages);
-            return newMessages;
-        });
-    };
+    // const addMessage = (stringMessage) => {
+    //     console.log(stringMessage.data); // incoming from server
+    //     setMessages((messages) => {
+    //         const newMessages = messages.slice(); // copy from item 0
+    //         newMessages.push(stringMessage.data);
+    //         console.log(newMessages);
+    //         return newMessages;
+    //     });
+    // };
 
-    React.useEffect(() => {
-        console.log('Got the message');
-        // do something when component mounts
-        ws.addEventListener('message', addMessage);
-        return () => ws.removeEventListener('message', addMessage);
-    }, []);
+    // React.useEffect(() => {
+    //     console.log('Got the message');
+    //     // do something when component mounts
+    //     ws.addEventListener('message', addMessage);
+    //     return () => ws.removeEventListener('message', addMessage);
+    // }, []);
 
     // This grabs the current user's profile pic number for the sidebar
     const profilePic = () => {
@@ -171,7 +174,7 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
     React.useEffect(() => {
         fetchMessages();
 
-    }, []);
+    });
 
     if (!appUser) {
         return <Redirect to="/" />;
@@ -195,7 +198,7 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
                         </div>
                         <div class="bottom-buttons">
                             <Link to="/profile"><button class="menu-buttons" id="profile-bttn" type="button" name="profile">PROFILE</button></Link>
-                            <button class="menu-buttons" id="logout-bttn" type="button" name="logout">LOGOUT</button>
+                            <button class="menu-buttons" id="logout-bttn" type="button" name="logout" onClick={logoutUser}>LOGOUT</button>
                         </div>
                     </div>
                 </div>
@@ -240,13 +243,13 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
                                             </div>
                                             <div class="message-content-text">
                                                 <p>{parseText(message)}</p>
-                                                <button id="like-button" type="button" name="like-button" onClick={likeMessage}>
+                                                <button id="like-button" type="button" name="like-button" onClick={() => likeMessage(message)}>
                                                     <img id="thumbs-up" src={LikeBtn} alt="" />
                                                     <p id="thumbs-up-count">{parseLikes(message)}</p>
                                                 </button>
                                             </div>
                                         </div>
-                                        <ScrollMessages messages={messages} />
+                                        {/* <ScrollMessages messages={messages} /> */}
                                     </div>
                                 );
                             })}
