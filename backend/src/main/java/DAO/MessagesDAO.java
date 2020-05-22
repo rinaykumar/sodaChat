@@ -8,6 +8,8 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import org.bson.conversions.Bson;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -61,9 +63,14 @@ public class MessagesDAO {
     // Updating Likes of a message
     Document messageToFind = MessagesCollection.find(eq("text", text)).first();
     int likeNum = (Integer) messageToFind.get("thumbsUp"); //converts object to int
+    System.out.println("text issssss: " + messageToFind.get("text"));
+
+    Bson filter = new Document("text", text);
+    Bson newVale = new Document("thumbsUp", thumbsUp);
+    Bson updateLikes = new Document("$set", newVale);
+    MessagesCollection.updateOne(filter, updateLikes);
 
   }
-
   public MessagesListDTO getAllMessages() {
     MongoDatabase db = mongoClient.getDatabase("FinalDatabase");
     MongoCollection<Document> messagesCollection = db.getCollection("Messages");
