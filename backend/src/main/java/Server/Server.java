@@ -52,7 +52,7 @@ public class Server {
       // Init Gson
     Gson gson = new Gson();
 
-    port(1234);
+    port(3001);
 
     // 2 way communication
     webSocket("/ws", WebSocketHandler.class); // open socket and leave it open
