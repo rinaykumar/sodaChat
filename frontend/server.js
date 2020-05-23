@@ -15,7 +15,7 @@ app.all("/api/*", (req, res) => {
   // sends api requests to the backend
   console.log(req.path)
   apiProxy.web(req, res, {
-    target: 'http://localhost:3001',
+    target: 'http://localhost:1234',
   });
 });
 
