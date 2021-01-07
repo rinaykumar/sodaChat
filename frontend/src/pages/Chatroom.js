@@ -43,16 +43,16 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
             .catch(console.log)
     }
 
-    // const ScrollMessages = ({ messages }) => {
-    //     const lastMessageRef = React.useRef(null);
-    //     const scrolltoBottom = () => {
-    //         lastMessageRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start', duration: 10000 });
-    //     }
-    //     React.useEffect(scrolltoBottom, [messages]);
-    //     return (
-    //         <div ref={lastMessageRef} />
-    //     );
-    // }
+    const ScrollMessages = ({ messages }) => {
+        const lastMessageRef = React.useRef(null);
+        const scrolltoBottom = () => {
+            lastMessageRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start', duration: 10000 });
+        }
+        React.useEffect(scrolltoBottom, [messages]);
+        return (
+            <div ref={lastMessageRef} />
+        );
+    }
 
     // const addMessage = (stringMessage) => {
     //     console.log(stringMessage.data); // incoming from server
@@ -171,8 +171,7 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
 
     React.useEffect(() => {
         fetchMessages();
-
-    });
+    }, []);
 
     if (!appUser) {
         return <Redirect to="/" />;
@@ -195,7 +194,7 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
                             <header class="user-counter"> Total Users LoggedIn: {totalUsers}</header>
                         </div> */}
                         <div class="bottom-buttons">
-                            <Link to="/profile"><button class="menu-buttons" id="profile-bttn" type="button" name="profile">PROFILE</button></Link>
+                            {/* <Link to="/profile"><button class="menu-buttons" id="profile-bttn" type="button" name="profile">PROFILE</button></Link> */}
                             <button class="menu-buttons" id="logout-bttn" type="button" name="logout" onClick={logoutUser}>LOGOUT</button>
                         </div>
                     </div>
@@ -247,7 +246,7 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
                                                 </button>
                                             </div>
                                         </div>
-                                        {/* <ScrollMessages messages={messages} /> */}
+                                        {<ScrollMessages messages={messages} />}
                                     </div>
                                 );
                             })}
