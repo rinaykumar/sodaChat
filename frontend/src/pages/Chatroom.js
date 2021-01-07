@@ -10,7 +10,7 @@ import LikeBtn from '../svg/like-bttn.svg';
 import axios from 'axios';
 import $ from 'jquery';
 
-const ws = new WebSocket('ws://localhost:1234/ws');
+const webSocket = new WebSocket('ws://localhost:4001');
 
 const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
     // const [totalUsers, setTotalUsers] = React.useState(0);
@@ -96,19 +96,26 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
         console.log("From submitMessage");
         console.log(message);
         console.log(appUser);
-        ws.send(message);
-        setMessage('')
+        
+      
         const body = {
             text: message,
             user: appUser,
-            likes: thumbsUp
+            likes: thumbsUp,
+            actionType: 'sendChatMessage',
         };
-        // ws.send(body.text);
+ 
+
+        webSocket.send(JSON.stringify(body));
+        //setMessage('')    
+
         axios.post('/api/addMessage', body)
             .then(() => setMessage(''))
             .then(() => setThumbsUp(0))
             .then(() => fetchMessages())
             .catch(console.log);
+
+        
     };
 
 
@@ -171,6 +178,7 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
 
     React.useEffect(() => {
         fetchMessages();
+        webSocket.addEventListener('message', fetchMessages);
     }, []);
 
     if (!appUser) {

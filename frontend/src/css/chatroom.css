@@ -83,6 +83,7 @@ input:focus, textarea, button {
     color: #7BA1A6;
     background: #383838;
     border-color: #7BA1A6;
+    margin-left: 10px;
   }
 
   #sidebarCollapse:hover {
@@ -144,7 +145,7 @@ input:focus, textarea, button {
   display: block;
   height: 100px;
   width: 100px;
-  margin: 100px auto 0px auto;
+  margin: 10px auto 0px auto;
   border-radius: 50px;
 }
 
