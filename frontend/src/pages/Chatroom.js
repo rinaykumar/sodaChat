@@ -187,6 +187,7 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
                     </div>
                     <div class="left-menu-bar">
                         <div class="menu-profile-info">
+                            <h3 id="header-signIn-signup" class="centerText"><em>sodaChat</em></h3>
                             <img id="user-profile-image" src={profilePic()} alt="" />
                             {appUser && <h5 id="username">{appUser}</h5>}
                         </div>
@@ -203,7 +204,7 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
                         <i class="fas fa-align-left"></i>
                     </button>
-                    <div class="right-chatroom">
+                    <div class="right-chatroom"> 
                         <div class="messages-box">
                             <div class="submitted-message">
                                 <div class="submitted-message-box-1">

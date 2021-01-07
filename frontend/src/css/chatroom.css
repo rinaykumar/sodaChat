@@ -224,7 +224,7 @@ input:focus, textarea, button {
     flex-direction: column;
     align-items: center;
     width: auto;
-    height: auto;
+    height: 104%;
   }
 
   /* messages */
@@ -233,7 +233,7 @@ input:focus, textarea, button {
     justify-content: flex-start;
     overflow-y: scroll;
     width: 70vw;
-    height: 70vh;
+    height: 74vh;
     margin: 50px 0 0 0;
   }
 
