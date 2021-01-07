@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const httpProxy = require('http-proxy');
 const app = express();
-const port = process.env.PORT_NUMBER || 4000;
+const port = process.env.PORT_NUMBER || 80;
 
 const apiProxy = httpProxy.createProxyServer();
 
