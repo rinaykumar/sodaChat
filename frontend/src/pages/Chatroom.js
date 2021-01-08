@@ -10,7 +10,7 @@ import LikeBtn from '../svg/like-bttn.svg';
 import axios from 'axios';
 import $ from 'jquery';
 
-const webSocket = new WebSocket('ws://localhost:4001');
+const webSocket = new WebSocket('ws://localhost:4001'); // localhost needs to change to AWS IP
 
 const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
     // const [totalUsers, setTotalUsers] = React.useState(0);
@@ -172,11 +172,8 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
     });
 
     React.useEffect(() => {
-        webSocket.addEventListener('message', fetchMessages); 
-    });
-
-    React.useEffect(() => {
         fetchMessages();
+        webSocket.addEventListener('message', fetchMessages); 
     }, []);
 
     if (!appUser) {
