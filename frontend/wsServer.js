@@ -6,8 +6,7 @@ const wss = new WebSocket.Server({port: 4001});
 const chatMessages = [];
 
 const broadcast = (data) => {
-  const textToSend = JSON.stringify(data);
-  wss.clients.forEach(client => client.send(textToSend));
+  wss.clients.forEach(client => client.send(data));
 }
 
 wss.on('connection', (ws) => {
@@ -19,12 +18,8 @@ wss.on('connection', (ws) => {
   });
 
   ws.on('message', (rawData) => {
-    const data = JSON.parse(rawData);
+    //const data = JSON.parse(rawData);
     console.log('Client says ' + rawData)
-    const broadcastMessage = {
-      actionType: 'updateChatMessages',
-      chatMessages: chatMessages, 
-    };
-    broadcast(broadcastMessage);
+    broadcast("message");
   });
 });

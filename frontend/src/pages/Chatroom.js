@@ -46,7 +46,7 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
     const ScrollMessages = ({ messages }) => {
         const lastMessageRef = React.useRef(null);
         const scrolltoBottom = () => {
-            lastMessageRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start', duration: 10000 });
+            lastMessageRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start', duration: 500 });
         }
         React.useEffect(scrolltoBottom, [messages]);
         return (
@@ -97,7 +97,6 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
         console.log(message);
         console.log(appUser);
         
-      
         const body = {
             text: message,
             user: appUser,
@@ -105,17 +104,13 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
             actionType: 'sendChatMessage',
         };
  
-
-        webSocket.send(JSON.stringify(body));
-        //setMessage('')    
+        webSocket.send("message");   
 
         axios.post('/api/addMessage', body)
             .then(() => setMessage(''))
             .then(() => setThumbsUp(0))
             .then(() => fetchMessages())
             .catch(console.log);
-
-        
     };
 
 
@@ -177,8 +172,11 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
     });
 
     React.useEffect(() => {
+        webSocket.addEventListener('message', fetchMessages); 
+    });
+
+    React.useEffect(() => {
         fetchMessages();
-        webSocket.addEventListener('message', fetchMessages);
     }, []);
 
     if (!appUser) {
