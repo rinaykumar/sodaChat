@@ -17,7 +17,7 @@ It's deployed on an AWS EC2 instance, hosted on a domain from Google Domains, an
 
 ![alt text](frontend/src/videos/backend.png)
 
-Utitlizes DTO and DAO design patterns.
+Utilizes DTO and DAO design patterns.
 
 
 ### Local Install
@@ -32,6 +32,8 @@ npm i
 
 # run frontend servers with pm2
 pm2 start server.js wsServer.js
+
+# now running on localhost
 ```
 
 ### Team
