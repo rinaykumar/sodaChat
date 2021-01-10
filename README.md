@@ -1,23 +1,43 @@
-# final-project-teamsoda
-final-project-teamsoda created by Team Soda
+# sodaChat
+![GitHub](https://img.shields.io/github/license/rinaykumar/sodaChat) 
 
-# Logins
+https://sodachat.net
 
-Default user
-login: user
-password: password
+A live chat web application.
 
-### Group works
-(listed but not limited to)
-- Rinay :  Responsible for chatroom backend, Code Quantification and Review, backend. Branch name: Rinay
-- Roland : Responsible for Profile backend and AWS deployment. Branch name: RolandBranch
-- Girish :  Responsible for Profile frontend. Branch name: GirishBranch
-- Danish : Responsible for autoscroll feature. Branch name: DanishBranch
-- Michael : Responsible for login backend, signup backend. Branch name: MikesBranch
-- Jose : Signup frontend, login frontend, chatroom frontend. Branch name: JosesBranch
+![ui video demo](frontend/src/videos/ui-demo.gif)
 
 
-Individual commits are on personal branches.
+sodaChat is a fullstack web application built with React.js, Node.js, and Express.js for the frontend, and Java, Maven, Spark, WebSocket, and MongoDB for the backend.
+It features a full login and auth system to sign in or create accounts, live messaging, and a like button.
+It's deployed on an AWS EC2 instance, hosted on a domain from Google Domains, and SSL certified with LetsEncrypt.
 
-### IP address
-http://52.15.146.166:4000/
+
+### Backend Strucuture
+
+![alt text](frontend/src/videos/backend.png)
+
+Utitlizes DTO and DAO design patterns.
+
+
+### Local Install
+
+```bash
+# open backend folder in an ide such as intellij idea and build/run server main
+
+# start local mongodb service
+
+# cd into frontend folder in terminal and install node modules
+npm i
+
+# run frontend servers with pm2
+pm2 start server.js wsServer.js
+```
+
+### Team
+- Rinay   : Backend, frontend features, deployment.
+- Michael : Backend features.
+- Jose    : Frontend styling.
+- Girish  : Frontend styling.
+- Danish  : Frontend features.
+- Roland  : Frontend features.
