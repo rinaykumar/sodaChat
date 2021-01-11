@@ -1,4 +1,5 @@
-# sodaChat
+# sodachat
+![alt text](https://img.shields.io/badge/build-passing-brightgreen)
 ![GitHub](https://img.shields.io/github/license/rinaykumar/sodaChat) 
 
 https://sodachat.net
@@ -35,11 +36,3 @@ pm2 start server.js wsServer.js
 
 # now running on localhost
 ```
-
-### Team
-- Rinay   : Backend, frontend features, deployment.
-- Michael : Backend features.
-- Jose    : Frontend styling.
-- Girish  : Frontend styling.
-- Danish  : Frontend features.
-- Roland  : Frontend features.
