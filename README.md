@@ -1,5 +1,8 @@
 # sodachat
-![GitHub](https://img.shields.io/github/license/rinaykumar/sodaChat) 
+![GitHub](https://img.shields.io/github/license/rinaykumar/sodaChat)
+![GitHub language count](https://img.shields.io/github/languages/count/rinaykumar/sodachat)
+![GitHub top language](https://img.shields.io/github/languages/top/rinaykumar/sodachat)
+![GitHub contributors](https://img.shields.io/github/contributors/rinaykumar/sodachat)
 
 https://sodachat.net
 
