@@ -1,5 +1,4 @@
 # sodachat
-![alt text](https://img.shields.io/badge/build-passing-brightgreen)
 ![GitHub](https://img.shields.io/github/license/rinaykumar/sodaChat) 
 
 https://sodachat.net
