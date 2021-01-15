@@ -5,6 +5,8 @@
 ![GitHub contributors](https://img.shields.io/github/contributors/rinaykumar/sodachat)
 
 https://sodachat.net
+<br />
+<sub><sup>Best viewed on a laptop/desktop.</sup></sub>
 
 A live chat web application.
 
