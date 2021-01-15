@@ -10,7 +10,7 @@ import LikeBtn from '../svg/like-bttn.svg';
 import axios from 'axios';
 import $ from 'jquery';
 
-const webSocket = new WebSocket('ws://localhost:4001'); // localhost needs to change to AWS IP
+const webSocket = new WebSocket('wss://sodachat.net:4001');
 
 const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
     // const [totalUsers, setTotalUsers] = React.useState(0);
@@ -27,7 +27,6 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
             })
             .catch(console.log);
     };
-
 
     const likeMessage = (message) => {
         // let currentLikes = parseLikes(message) + 1;
@@ -53,23 +52,6 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
             <div ref={lastMessageRef} />
         );
     }
-
-    // const addMessage = (stringMessage) => {
-    //     console.log(stringMessage.data); // incoming from server
-    //     setMessages((messages) => {
-    //         const newMessages = messages.slice(); // copy from item 0
-    //         newMessages.push(stringMessage.data);
-    //         console.log(newMessages);
-    //         return newMessages;
-    //     });
-    // };
-
-    // React.useEffect(() => {
-    //     console.log('Got the message');
-    //     // do something when component mounts
-    //     ws.addEventListener('message', addMessage);
-    //     return () => ws.removeEventListener('message', addMessage);
-    // }, []);
 
     // This grabs the current user's profile pic number for the sidebar
     const profilePic = () => {
@@ -112,7 +94,6 @@ const Chatroom = ({ appUser, setAppUser, totalUsers, setTotalUsers }) => {
             .then(() => fetchMessages())
             .catch(console.log);
     };
-
 
     const parseText = (message) => {
         let obj = JSON.parse(message);

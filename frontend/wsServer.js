@@ -1,9 +1,19 @@
 const WebSocket = require('ws');
+const fs = require('fs');
+const https = require('https');
 
-// WebSocket Server
-const wss = new WebSocket.Server({port: 4001});
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/sodachat.net/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/sodachat.net/cert.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/sodachat.net/chain.pem', 'utf8');
 
-const chatMessages = [];
+const credentials = {
+        key: privateKey,
+        cert: certificate,
+        ca: ca
+};
+
+const server = https.createServer(credentials);
+const wss = new WebSocket.Server({ server });
 
 const broadcast = (data) => {
   wss.clients.forEach(client => client.send(data));
@@ -23,3 +33,5 @@ wss.on('connection', (ws) => {
     broadcast("message");
   });
 });
+
+server.listen(4001);

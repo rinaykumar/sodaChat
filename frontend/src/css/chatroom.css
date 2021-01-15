@@ -50,7 +50,6 @@ input:focus, textarea, button {
     float: right;
     pointer-events: none;
   }
-
   #sidebar {
     background: #1F2326;
     height: 100vh;
@@ -148,7 +147,6 @@ input:focus, textarea, button {
   margin: 10px auto 0px auto;
   border-radius: 50px;
 }
-
 #username {
   text-align: center;
   font-size: 25px;
@@ -167,12 +165,6 @@ input:focus, textarea, button {
   font-size: 18px;
   font-weight: 900;
   border-style: none;
-
-/* 
-  padding: 5px;
-  background: black;
-  color: white;
-  margin-bottom: 50px; */
 }
 
 /* BOTTOM PORTION OF THE MENU */
@@ -289,8 +281,6 @@ input:focus, textarea, button {
     height: 100vh;
   }
 }
-
-
 
 .submitted-message-box-1 {
   /*user image within the submitted message*/
