@@ -21,7 +21,7 @@ It's deployed on an AWS EC2 instance, hosted on a domain from Google Domains, an
 
 ### Backend Strucuture
 
-![alt text](frontend/src/videos/backend.png)
+<img src='frontend/src/videos/backend.png' width=500 />
 
 Utilizes DTO and DAO design patterns.
 
