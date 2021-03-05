@@ -14,7 +14,7 @@ A live chat web application.
 ![ui video demo](frontend/src/videos/ui-demo.gif)
 
 
-sodaChat is a fullstack web application built with React.js, Node.js, and Express.js for the frontend, and Java, Maven, Spark, WebSocket, and MongoDB for the backend.
+sodaChat is a fullstack web application built with JavaScript, React, Node.js, and Express.js for the frontend, and Java, Maven, Spark, WebSocket, and MongoDB for the backend.
 It features a full login and auth system to sign in or create accounts, live messaging, and a like button.
 It's deployed on an AWS EC2 instance, hosted on a domain from Google Domains, and SSL certified with LetsEncrypt.
 
