@@ -5,10 +5,6 @@
 ![GitHub contributors](https://img.shields.io/github/contributors/rinaykumar/sodachat)
 ![GitHub](https://img.shields.io/github/license/rinaykumar/sodaChat)
 
-[https://sodachat.net](https://sodachat.net)
-<br />
-<sub><sup>Best viewed on a laptop/desktop.</sup></sub>
-
 A live chat web application.
 
 ![ui video demo](frontend/src/videos/ui-demo.gif)
